@@ -44,6 +44,6 @@ export default class StudentsController {
       updatedAt: '',
     }
 
-    return inertia.render('students/create', { result, title: 'New Student' })
+    return inertia.render('students/create', { result, title: 'Enroll Student' })
   }
 }

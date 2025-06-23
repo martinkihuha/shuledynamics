@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { store } from '@/lib/student'
+import { store } from '@/lib/guardian'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 import { router } from '@inertiajs/vue3'
 
-import StudentStatus from '#models/student_status'
-import Gender from '#models/gender'
 import Country from '#models/country'
 import Religion from '#models/religion'
 import Curriculum from '#models/curriculum'
-import Grade from '#models/grade'
-import Stream from '#models/stream'
 
 import { Card } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -25,16 +21,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import Student from '#models/student'
 
 const isLoading = ref(false)
-const today = new Date().toISOString().split('T')[0]
 const countries = ref<Country[]>([])
 const curriculums = ref<Curriculum[]>([])
-const genders = ref<Gender[]>([])
-const grades = ref<Grade[]>([])
 const religions = ref<Religion[]>([])
-const streams = ref<Stream[]>([])
-const studentStatuses = ref<StudentStatus[]>([])
+const students = ref<Student[]>([])
 
 const fetchCountries = async () => {
   try {
@@ -66,36 +59,6 @@ const fetchCurriculums = async () => {
   }
 }
 
-const fetchGenders = async () => {
-  try {
-    const response = await fetch('/api/genders', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-    genders.value = await response.json()
-  } catch (error) {
-    console.error('Error fetching genders:', error)
-  }
-}
-
-const fetchGrades = async () => {
-  try {
-    const response = await fetch('/api/grades', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-    grades.value = await response.json()
-  } catch (error) {
-    console.error('Error fetching grades:', error)
-  }
-}
-
 const fetchReligions = async () => {
   try {
     const response = await fetch('/api/religions', {
@@ -111,60 +74,36 @@ const fetchReligions = async () => {
   }
 }
 
-const fetchStreams = async () => {
+const fetchStudents = async () => {
   try {
-    const response = await fetch('/api/streams', {
+    const response = await fetch('/api/students', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     })
-    streams.value = await response.json()
+    students.value = await response.json()
   } catch (error) {
-    console.error('Error fetching streams:', error)
-  }
-}
-
-const fetchStudentStatuses = async () => {
-  try {
-    const response = await fetch('/api/student-statuses', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-    studentStatuses.value = await response.json()
-  } catch (error) {
-    console.error('Error fetching student statuses:', error)
+    console.error('Error fetching students:', error)
   }
 }
 
 onMounted(() => {
   fetchCountries()
   fetchCurriculums()
-  fetchGenders()
-  fetchGrades()
   fetchReligions()
-  fetchStreams()
-  fetchStudentStatuses()
+  fetchStudents()
 })
 
 const formSchema = z.object({
   countryId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Country' }),
-  curriculumId: z
-    .union([z.number(), z.string()])
-    .refine((v) => !!v, { message: 'Invalid Curriculum' }),
-  genderId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Gender' }),
-  gradeId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Grade' }),
   religionId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Religion' }),
-  streamId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Stream' }),
-  admissionNo: z.string().refine((v) => !!v, { message: 'Invalid Admission Number' }),
   name: z.string().refine((v) => !!v, { message: 'Invalid Name' }),
-  dob: z.string().refine((v) => !!v, { message: 'Invalid Date of Birth' }),
-  nemisNo: z.string().refine((v) => !!v, { message: 'Invalid NEMIS Number' }),
-  dateOfAdmission: z.string().refine((v) => !!v, { message: 'Invalid Date of Admission' }),
+  email: z.string().refine((v) => !!v, { message: 'Invalid Email' }),
+  mobile: z.string().refine((v) => !!v, { message: 'Invalid Mobile Number' }),
+  location: z.string().refine((v) => !!v, { message: 'Invalid Location' }),
+  notes: z.string().refine((v) => !!v, { message: 'Invalid Notes' }),
 })
 
 const { errors, handleSubmit } = useForm({
@@ -179,7 +118,7 @@ const onSubmit = handleSubmit((values) => {
   if (store?.result?.id === '') {
     try {
       isLoading.value = true
-      router.post('/students', values, {
+      router.post('/guardians', values, {
         onError: (errors) => {
           console.error('Error submitting form:', errors)
         },
@@ -208,13 +147,13 @@ const onSubmit = handleSubmit((values) => {
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Student Name
+              Guardian Name
             </FormLabel>
 
             <FormControl class="text-xs">
               <Input
                 type="text"
-                placeholder="Student Name"
+                placeholder="Guardian Name"
                 autocomplete="off"
                 class="text-xs rounded h-9 bg-card"
                 v-bind="componentField"
@@ -225,19 +164,18 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="dob">
+        <FormField v-slot="{ componentField }" name="mobile">
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Date of Birth
+              Mobile Number
             </FormLabel>
 
             <FormControl class="text-xs">
               <Input
-                type="date"
-                placeholder="Date of Birth"
+                type="tel"
+                placeholder="Mobile Number"
                 autocomplete="off"
-                :max="today"
                 class="text-xs rounded h-9 bg-card"
                 v-bind="componentField"
               />
@@ -247,17 +185,38 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="admissionNo">
+        <FormField v-slot="{ componentField }" name="email">
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Admission Number
+              Email
+            </FormLabel>
+
+            <FormControl class="text-xs">
+              <Input
+                type="email"
+                placeholder="Email"
+                autocomplete="off"
+                class="text-xs rounded h-9 bg-card"
+                v-bind="componentField"
+              />
+            </FormControl>
+
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+
+        <FormField v-slot="{ componentField }" name="location">
+          <FormItem class="flex flex-col gap-1">
+            <FormLabel class="text-[10px] flex items-center gap-1">
+              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+              Location
             </FormLabel>
 
             <FormControl class="text-xs">
               <Input
                 type="text"
-                placeholder="Admission Number"
+                placeholder="Location"
                 autocomplete="off"
                 class="text-xs rounded h-9 bg-card"
                 v-bind="componentField"
@@ -268,51 +227,22 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="studentStatusId">
+        <FormField v-slot="{ componentField }" name="religionId">
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Student Status
-            </FormLabel>
-
-            <Select v-bind="componentField" disabled>
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Student Status" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in studentStatuses"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="genderId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Gender
+              Religion
             </FormLabel>
 
             <Select v-bind="componentField">
               <FormControl class="rounded bg-card">
                 <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Gender" />
+                  <SelectValue placeholder="Religion" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
                 <SelectItem
-                  v-for="item in genders"
+                  v-for="item in religions"
                   :key="item?.id"
                   :value="item?.id?.toString()"
                   class="text-xs"
@@ -355,164 +285,28 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="religionId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Religion
-            </FormLabel>
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="notes">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Notes
+              </FormLabel>
 
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Religion" />
-                </SelectTrigger>
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Notes"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
               </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in religions"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
 
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="dateOfAdmission">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Date of Admission
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="date"
-                placeholder="Date of Admission"
-                autocomplete="off"
-                :max="today"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="nemisNo">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              NEMIS Number
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="text"
-                placeholder="NEMIS Number"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="curriculumId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Curriculum
-            </FormLabel>
-
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Curriculum" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in curriculums"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="gradeId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Grade
-            </FormLabel>
-
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Grade" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in grades"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="streamId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Stream
-            </FormLabel>
-
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Stream" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in streams"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
       </div>
     </Card>
 

@@ -17,6 +17,7 @@ import { Card } from '@/components/ui/card'
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import StudentInfoForm from '@/components/StudentInfoForm.vue'
+import GuardianInfoForm from '@/components/GuardianInfoForm.vue'
 
 const props = defineProps<{
   result: any
@@ -124,20 +125,23 @@ onMounted(() => {
       </ul>
 
       <div class="p-4 text-sm">
-        <div v-if="activeTab === 1" class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          <StudentInfoForm class="md:col-span-2" />
-        </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div class="md:col-span-2">
+            <StudentInfoForm v-if="activeTab === 1" />
+            <GuardianInfoForm v-else-if="activeTab === 2" />
 
-        <p v-else>
-          First complete the
-          <b
-            class="underline cursor-pointer text-primary hover:no-underline"
-            @click="activeTab = activeTab - 1"
-          >
-            {{ tabInfo }}
-          </b>
-          tab
-        </p>
+            <p v-else>
+              First complete the
+              <b
+                class="underline cursor-pointer text-primary hover:no-underline"
+                @click="activeTab = activeTab - 1"
+              >
+                {{ tabInfo }}
+              </b>
+              tab
+            </p>
+          </div>
+        </div>
       </div>
     </Card>
   </div>

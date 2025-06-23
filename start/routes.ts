@@ -25,6 +25,7 @@ const StudentTabsController = () => import('#controllers/student_tabs_controller
 const CurriculumsController = () => import('#controllers/curriculums_controller')
 const GradesController = () => import('#controllers/grades_controller')
 const StreamsController = () => import('#controllers/streams_controller')
+const RelationshipsController = () => import('#controllers/relationships_controller')
 
 router.group(() => {
   router.on('/').redirect('/dashboard')
@@ -42,6 +43,7 @@ router.group(() => {
       router.get('/curriculums', [CurriculumsController, 'index'])
       router.get('/genders', [GendersController, 'index'])
       router.get('/grades', [GradesController, 'index'])
+      router.get('/relationships', [RelationshipsController, 'index'])
       router.get('/religions', [ReligionsController, 'index'])
       router.get('/taxes', [TaxesController, 'index'])
       router.get('/modules', [ModulesController, 'index'])

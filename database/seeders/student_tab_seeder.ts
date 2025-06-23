@@ -28,8 +28,8 @@ export default class extends BaseSeeder {
       },
       {
         title: 'Class Info',
-        icon: 'heroicons:document',
-        iconSolid: 'heroicons:document-solid',
+        icon: 'heroicons:document-text',
+        iconSolid: 'heroicons:document-text-solid',
         listOrder: 4,
       },
       {
@@ -40,8 +40,8 @@ export default class extends BaseSeeder {
       },
       {
         title: 'School Fees',
-        icon: 'heroicons:document-currency-dollar',
-        iconSolid: 'heroicons:document-currency-dollar-solid',
+        icon: 'heroicons:banknotes',
+        iconSolid: 'heroicons:banknotes-solid',
         listOrder: 6,
       },
       {
@@ -52,8 +52,8 @@ export default class extends BaseSeeder {
       },
       {
         title: 'Incidents',
-        icon: 'heroicons:document-text',
-        iconSolid: 'heroicons:document-text-solid',
+        icon: 'heroicons:clipboard-document',
+        iconSolid: 'heroicons:clipboard-document-solid',
         listOrder: 8,
       },
       {

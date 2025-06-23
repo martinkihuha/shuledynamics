@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { store } from '@/lib/utils'
+import { onMounted } from 'vue'
+import { store, formatCurrency } from '@/lib/utils'
 
 import {
   Breadcrumb,
@@ -71,11 +71,11 @@ onMounted(() => {
               class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
             >
               <Icon icon="heroicons:plus" class="size-4" />
-              <span class="text-nowrap">New Student</span>
+              <span class="text-nowrap">Enroll a Student</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="bottom" class="bg-card border text-muted-foreground text-xs">
-            <p>Click to create a new student</p>
+          <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
+            <p>Click to enroll a student</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
