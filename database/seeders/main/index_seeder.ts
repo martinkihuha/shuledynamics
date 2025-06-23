@@ -19,9 +19,16 @@ export default class extends BaseSeeder {
   }
 
   async run() {
+    await this.seed(await import('#database/seeders/country_seeder'))
+    await this.seed(await import('#database/seeders/county_seeder'))
     await this.seed(await import('#database/seeders/currency_seeder'))
     await this.seed(await import('#database/seeders/gender_seeder'))
+    await this.seed(await import('#database/seeders/religion_seeder'))
     await this.seed(await import('#database/seeders/tax_seeder'))
     await this.seed(await import('#database/seeders/module_seeder'))
+    await this.seed(await import('#database/seeders/curriculum_seeder'))
+    await this.seed(await import('#database/seeders/grade_seeder'))
+    await this.seed(await import('#database/seeders/student_status_seeder'))
+    await this.seed(await import('#database/seeders/student_tab_seeder'))
   }
 }

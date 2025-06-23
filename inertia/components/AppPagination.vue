@@ -33,11 +33,13 @@ const range = computed(() => {
 <template>
   <div class="flex items-center justify-between gap-2 text-[10px] sm:text-xs sm:pl-2">
     <div class="hidden sm:block">
-      {{ meta.total > 0 ? (meta.currentPage - 1) * meta.perPage + 1 : meta.total }} -
+      {{ meta?.total > 0 ? (meta?.currentPage - 1) * meta?.perPage + 1 : meta?.total }} -
       {{
-        meta.currentPage * meta.perPage <= meta.total ? meta.currentPage * meta.perPage : meta.total
+        meta?.currentPage * meta?.perPage <= meta?.total
+          ? meta?.currentPage * meta?.perPage
+          : meta?.total
       }}
-      of {{ meta.total }}
+      of {{ meta?.total }}
     </div>
 
     <div class="flex items-center">
@@ -60,12 +62,12 @@ const range = computed(() => {
         @change="getPage(($event?.target as HTMLSelectElement).value)"
       >
         <option
-          v-for="(_, i) in meta.lastPage"
+          v-for="(_, i) in meta?.lastPage"
           :key="i"
-          :selected="meta.currentPage === i + 1"
+          :selected="meta?.currentPage === i + 1"
           :value="i + 1"
         >
-          Page {{ i + 1 }} of {{ meta.lastPage }}
+          Page {{ i + 1 }} of {{ meta?.lastPage }}
         </option>
       </select>
 

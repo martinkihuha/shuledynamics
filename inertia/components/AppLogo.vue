@@ -16,7 +16,7 @@ import logoSrc from '@/images/icon.png'
           <img :src="logoSrc" alt="Shule Dynamics logo" class="size-7" />
           <div class="inline-flex items-center">
             <span class="text-primary">Shule</span
-            ><span class="font-thin text-accent">Dynamics</span>
+            ><span class="font-thin text-secondary">Dynamics</span>
           </div>
         </Link>
       </SidebarMenuButton>

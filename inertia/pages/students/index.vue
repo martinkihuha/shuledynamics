@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { store } from '@/lib/utils'
 
 import {
@@ -10,10 +10,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { Card } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppSearch from '@/components/AppSearch.vue'
+import AppPagination from '@/components/AppPagination.vue'
 
 defineProps<{
   results: any
@@ -60,13 +63,70 @@ onMounted(() => {
     <div class="flex items-center justify-between w-full gap-2">
       <AppSearch />
 
-      <Link
-        href="/students/create"
-        class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground dark:text-secondary md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
-      >
-        <Icon icon="heroicons:plus" class="size-4" />
-        <span class="text-nowrap">New Student</span>
-      </Link>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Link
+              href="/students/create"
+              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+            >
+              <Icon icon="heroicons:plus" class="size-4" />
+              <span class="text-nowrap">New Student</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="bottom" class="bg-card border text-muted-foreground text-xs">
+            <p>Click to create a new student</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
+
+    <Card class="py-0 rounded bg-card/80">
+      <table class="min-w-full text-xs rounded table-fixed">
+        <thead>
+          <tr class="border-b text-[10px] divide-x divide-card bg-muted text-muted-foreground">
+            <th class="px-3 py-2 text-left text-nowrap">Name</th>
+            <th class="p-2 text-left text-nowrap">Age</th>
+            <th class="p-2 text-left text-nowrap">Gender</th>
+            <th class="p-2 text-left text-nowrap">Class</th>
+            <th class="p-2 text-left text-nowrap">Stream</th>
+            <th class="p-2 text-right text-nowrap">Balance</th>
+            <th class="w-2/12 px-3 py-2 text-left text-nowrap">Status</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y">
+          <tr
+            v-for="(item, i) in results?.data"
+            :key="item?.id"
+            class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
+            :class="{ 'bg-secondary/80': i % 2 === 0 }"
+          >
+            <td class="px-3 py-2 text-nowrap">
+              <Link
+                :href="`/students/${item?.id}`"
+                class="underline transition-all duration-300 text-primary hover:no-underline"
+              >
+                {{ item?.name }}
+              </Link>
+            </td>
+            <td class="p-2 text-nowrap">
+              {{ item?.age }}
+            </td>
+            <td class="p-2">{{ item?.gender?.name }}</td>
+            <td class="p-2">{{ item?.class }}</td>
+            <td class="p-2">{{ item?.stream }}</td>
+            <td class="p-2 text-right">
+              {{ formatCurrency(item?.currency?.name, item?.balance) }}
+            </td>
+            <td class="px-3 py-2 text-nowrap">
+              {{ item?.status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </Card>
+
+    <AppPagination :meta="results?.meta" current-path="/students" />
   </div>
 </template>
