@@ -7,8 +7,9 @@ import { z } from 'zod'
 import { router } from '@inertiajs/vue3'
 
 import Country from '#models/country'
-import Religion from '#models/religion'
 import Curriculum from '#models/curriculum'
+import Religion from '#models/religion'
+import Student from '#models/student'
 
 import { Card } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -21,7 +22,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import Student from '#models/student'
+import WysiwygEditor from '@/components/WysiwygEditor.vue'
 
 const isLoading = ref(false)
 const countries = ref<Country[]>([])
@@ -286,21 +287,15 @@ const onSubmit = handleSubmit((values) => {
         </FormField>
 
         <div class="sm:col-span-2">
-          <FormField v-slot="{ componentField }" name="notes">
+          <FormField name="notes">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
                 Notes
               </FormLabel>
 
-              <FormControl class="text-xs">
-                <Input
-                  type="text"
-                  placeholder="Notes"
-                  autocomplete="off"
-                  class="text-xs rounded h-9 bg-card"
-                  v-bind="componentField"
-                />
+              <FormControl class="gap-0 text-xs">
+                <WysiwygEditor v-model="store.result.notes" name="Notes" />
               </FormControl>
 
               <FormMessage class="text-xs" />

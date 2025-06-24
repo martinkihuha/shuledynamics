@@ -110,14 +110,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Card>
-    <CardHeader class="bg-secondary/50 border-b border-secondary-foreground/10 px-2 py-1">
+  <Card class="p-0 rounded-none">
+    <CardHeader class="px-2 py-1 border-b h-9 bg-muted/50 border-muted-foreground/10">
       <div v-if="editor" class="flex items-center space-x-3">
         <!-- Dropdown for Paragraph and Headings -->
         <select
           v-model="selectedNode"
           @change="setNodeType"
-          class="bg-card border border-secondary-foreground/10 rounded-[2px] text-xs py-1 pr-8"
+          class="bg-card border border-stone-300 rounded-[2px] text-xs py-1 pr-8"
         >
           <option value="paragraph">Paragraph</option>
           <option value="heading-1">Heading 1</option>
@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
           <option value="heading-3">Heading 3</option>
         </select>
 
-        <Separator orientation="vertical" class="mx-2 h-5 bg-secondary-foreground/30" />
+        <Separator orientation="vertical" class="h-5 mx-2 bg-stone-300" />
 
         <!-- Bold Button -->
 
@@ -138,11 +138,11 @@ onBeforeUnmount(() => {
                 :class="{ 'is-active': editor.isActive('bold') }"
                 class="flex items-center gap-2"
               >
-                <span class="font-bold text-lg px-1">B</span>
+                <span class="px-1 text-lg font-bold">B</span>
                 <span class="sr-only">Bold</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Bolden selected text</p>
             </TooltipContent>
           </Tooltip>
@@ -158,11 +158,11 @@ onBeforeUnmount(() => {
                 :class="{ 'is-active': editor.isActive('italic') }"
                 class="flex items-center gap-2"
               >
-                <span class="font-bold text-lg px-1">I</span>
+                <span class="px-1 text-lg font-bold">I</span>
                 <span class="sr-only">Italic</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Italize selected text</p>
             </TooltipContent>
           </Tooltip>
@@ -178,17 +178,17 @@ onBeforeUnmount(() => {
                 :class="{ 'is-active': editor.isActive('underline') }"
                 class="flex items-center gap-2"
               >
-                <span class="font-bold text-lg px-1">U</span>
+                <span class="px-1 text-lg font-bold">U</span>
                 <span class="sr-only">Underline</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Underline selected text</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <Separator orientation="vertical" class="mx-2 h-5 bg-secondary-foreground/30" />
+        <Separator orientation="vertical" class="h-5 mx-2 bg-stone-300" />
 
         <!-- Unordered List Button -->
         <TooltipProvider>
@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
                 <span class="sr-only">Unordered List</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Convert to a bulleted list</p>
             </TooltipContent>
           </Tooltip>
@@ -224,13 +224,13 @@ onBeforeUnmount(() => {
                 <span class="sr-only">Ordered List</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Convert to a numbered list</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <Separator orientation="vertical" class="mx-2 h-5 bg-secondary-foreground/30" />
+        <Separator orientation="vertical" class="h-5 mx-2 bg-stone-300" />
 
         <!-- Link Button -->
         <TooltipProvider>
@@ -246,7 +246,7 @@ onBeforeUnmount(() => {
                 <span class="sr-only">Link</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Add or edit a link</p>
             </TooltipContent>
           </Tooltip>
@@ -266,20 +266,20 @@ onBeforeUnmount(() => {
                 <span class="sr-only">Unlink</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" class="bg-card border text-secondary-foreground text-xs">
+            <TooltipContent side="bottom" class="text-xs border bg-card text-stone-300">
               <p>Remove link</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <Separator orientation="vertical" class="mx-2 h-5 bg-secondary-foreground/30" />
+        <Separator orientation="vertical" class="h-5 mx-2 bg-stone-300" />
 
         <!-- Add more buttons as needed -->
       </div>
     </CardHeader>
 
-    <CardContent class="prose p-0">
-      <editor-content :editor="editor" class="w-full text-xs text-justify px-3 pt-1 -mt-2" />
+    <CardContent class="gap-0 p-0 prose">
+      <editor-content :editor="editor" class="w-full px-3 pt-1 text-xs text-justify min-h-6" />
     </CardContent>
   </Card>
 </template>
