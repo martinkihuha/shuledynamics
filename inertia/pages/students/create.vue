@@ -18,6 +18,7 @@ import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import StudentInfoForm from '@/components/StudentInfoForm.vue'
 import GuardianInfoForm from '@/components/GuardianInfoForm.vue'
+import EducationHistoryForm from '@/components/EducationHistoryForm.vue'
 
 const props = defineProps<{
   result: any
@@ -129,6 +130,7 @@ onMounted(() => {
           <div class="md:col-span-2">
             <StudentInfoForm v-if="activeTab === 1" />
             <GuardianInfoForm v-else-if="activeTab === 2" />
+            <EducationHistoryForm v-else-if="activeTab === 3" />
 
             <p v-else>
               First complete the

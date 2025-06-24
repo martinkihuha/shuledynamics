@@ -8,6 +8,7 @@ import { router } from '@inertiajs/vue3'
 
 import Country from '#models/country'
 import Curriculum from '#models/curriculum'
+import Relationship from '#models/relationship'
 import Religion from '#models/religion'
 import Student from '#models/student'
 
@@ -21,12 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import WysiwygEditor from '@/components/WysiwygEditor.vue'
 
 const isLoading = ref(false)
 const countries = ref<Country[]>([])
 const curriculums = ref<Curriculum[]>([])
+const relationships = ref<Relationship[]>([])
 const religions = ref<Religion[]>([])
 const students = ref<Student[]>([])
 
@@ -57,6 +59,21 @@ const fetchCurriculums = async () => {
     curriculums.value = await response.json()
   } catch (error) {
     console.error('Error fetching curriculums:', error)
+  }
+}
+
+const fetchRelationships = async () => {
+  try {
+    const response = await fetch('/api/relationships', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+    relationships.value = await response.json()
+  } catch (error) {
+    console.error('Error fetching relationships:', error)
   }
 }
 
@@ -93,6 +110,7 @@ const fetchStudents = async () => {
 onMounted(() => {
   fetchCountries()
   fetchCurriculums()
+  fetchRelationships()
   fetchReligions()
   fetchStudents()
 })
@@ -104,7 +122,6 @@ const formSchema = z.object({
   email: z.string().refine((v) => !!v, { message: 'Invalid Email' }),
   mobile: z.string().refine((v) => !!v, { message: 'Invalid Mobile Number' }),
   location: z.string().refine((v) => !!v, { message: 'Invalid Location' }),
-  notes: z.string().refine((v) => !!v, { message: 'Invalid Notes' }),
 })
 
 const { errors, handleSubmit } = useForm({
@@ -143,159 +160,207 @@ const onSubmit = handleSubmit((values) => {
     </p>
 
     <Card class="p-4 rounded bg-muted">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField v-slot="{ componentField }" name="name">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Guardian Name
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="text"
-                placeholder="Guardian Name"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="mobile">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Mobile Number
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="tel"
-                placeholder="Mobile Number"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="email">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Email
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="email"
-                placeholder="Email"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="location">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Location
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="text"
-                placeholder="Location"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="religionId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Religion
-            </FormLabel>
-
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Religion" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in religions"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField v-slot="{ componentField }" name="countryId">
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Country
-            </FormLabel>
-
-            <Select v-bind="componentField">
-              <FormControl class="rounded bg-card">
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Country" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem
-                  v-for="item in countries"
-                  :key="item?.id"
-                  :value="item?.id?.toString()"
-                  class="text-xs"
-                >
-                  {{ item?.name }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <div class="sm:col-span-2">
-          <FormField name="notes">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+          <FormField v-slot="{ componentField }" name="name">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Guardian Name
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Guardian Name"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-3">
+          <FormField v-slot="{ componentField }" name="relationshipId">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Relationship
+              </FormLabel>
+
+              <Select v-bind="componentField">
+                <FormControl class="rounded bg-card">
+                  <SelectTrigger class="w-full">
+                    <SelectValue placeholder="Relationship" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem
+                    v-for="item in relationships"
+                    :key="item?.id"
+                    :value="item?.id?.toString()"
+                    class="text-xs"
+                  >
+                    {{ item?.name }}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="mobile">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Mobile Number
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="tel"
+                  placeholder="Mobile Number"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="email">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Email
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="religionId">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Religion
+              </FormLabel>
+
+              <Select v-bind="componentField">
+                <FormControl class="rounded bg-card">
+                  <SelectTrigger class="w-full">
+                    <SelectValue placeholder="Religion" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem
+                    v-for="item in religions"
+                    :key="item?.id"
+                    :value="item?.id?.toString()"
+                    class="text-xs"
+                  >
+                    {{ item?.name }}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-3">
+          <FormField v-slot="{ componentField }" name="location">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Location
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Location"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-3">
+          <FormField v-slot="{ componentField }" name="countryId">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Country
+              </FormLabel>
+
+              <Select v-bind="componentField">
+                <FormControl class="rounded bg-card">
+                  <SelectTrigger class="w-full">
+                    <SelectValue placeholder="Country" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem
+                    v-for="item in countries"
+                    :key="item?.id"
+                    :value="item?.id?.toString()"
+                    class="text-xs"
+                  >
+                    {{ item?.name }}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-6">
+          <FormField v-slot="{ componentField }" name="notes">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
                 Notes
               </FormLabel>
 
-              <FormControl class="gap-0 text-xs">
-                <WysiwygEditor v-model="store.result.notes" name="Notes" />
+              <FormControl class="text-xs">
+                <Textarea
+                  placeholder="Notes"
+                  autocomplete="off"
+                  class="text-xs rounded bg-card"
+                  v-bind="componentField"
+                />
               </FormControl>
 
               <FormMessage class="text-xs" />

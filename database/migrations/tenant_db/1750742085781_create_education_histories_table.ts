@@ -1,37 +1,32 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'guardians'
+  protected tableName = 'education_histories'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table
-        .integer('country_id')
+        .integer('county_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('countries')
+        .inTable('counties')
         .onDelete('CASCADE')
       table
-        .integer('relationship_id')
+        .integer('student_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('relationships')
+        .inTable('students')
         .onDelete('CASCADE')
-      table
-        .integer('religion_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('religions')
-        .onDelete('CASCADE')
-      table.string('name').notNullable().defaultTo('')
-      table.string('email').notNullable().defaultTo('')
-      table.string('mobile').notNullable().defaultTo('')
-      table.string('location').notNullable().defaultTo('')
-      table.text('notes').nullable().defaultTo('')
+      table.string('school_name').notNullable()
+      table.string('year_of_admission', 4).notNullable()
+      table.string('year_of_departure', 4).notNullable()
+      table.string('class_of_departure', 50).notNullable()
+      table.string('departure_reason').notNullable()
+      table.string('leaving_certificate').notNullable()
+      table.boolean('extra_activities').defaultTo(false)
 
       table.timestamp('deleted_at').nullable()
       table.timestamp('created_at').nullable()
