@@ -1,14 +1,16 @@
 import Tenant from '#models/tenant'
-import { BaseCommand } from '@adonisjs/core/ace'
+import { BaseCommand, flags } from '@adonisjs/core/ace'
 import app from '@adonisjs/core/services/app'
 import db from '@adonisjs/lucid/services/db'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { MigrationRunner } from '@adonisjs/lucid/migration'
 
 export default class TenantRollback extends BaseCommand {
-  declare shortname?: string
   static commandName = 'tenant:rollback'
   static description = 'Rollback single or multiple client databases'
+
+  @flags.string({ description: 'Shortname of the tenant to migrate' })
+  declare shortname?: string
 
   static options: CommandOptions = {
     startApp: true,

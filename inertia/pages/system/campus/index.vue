@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Card } from '@/components/ui/card'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
@@ -70,11 +70,11 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="w-full p-2 space-y-2 sm:px-4">
-    <div class="flex items-end justify-between w-full gap-2">
+  <div class="w-full p-2 space-y-2 sm:p-4">
+    <div class="flex items-center justify-between w-full gap-2">
       <h1>{{ school?.fullname }} Campuses</h1>
 
-      <TooltipProvider>
+      <!-- <TooltipProvider>
         <Tooltip>
           <TooltipTrigger as-child>
             <Link
@@ -89,7 +89,7 @@ onMounted(() => {
             <p>Click to add a school campus</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider> -->
     </div>
 
     <Card class="p-0 rounded bg-card/80">

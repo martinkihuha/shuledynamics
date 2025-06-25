@@ -31,6 +31,7 @@ const AcademicTermsController = () => import('#controllers/academic_terms_contro
 const CampusesController = () => import('#controllers/campuses_controller')
 const SalutationsController = () => import('#controllers/salutations_controller')
 const RolesController = () => import('#controllers/roles_controller')
+const GuardiansController = () => import('#controllers/guardians_controller')
 
 router.group(() => {
   router.on('/').redirect('/dashboard')
@@ -39,6 +40,7 @@ router.group(() => {
   router.resource('/tasks', TasksController).only(['index'])
   router.resource('/applicants', ApplicantsController).only(['index'])
   router.resource('/students', StudentsController).only(['index', 'create'])
+  router.resource('/guardians', GuardiansController).only(['index', 'store'])
 
   router
     .group(() => {

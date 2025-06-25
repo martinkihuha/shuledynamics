@@ -1,14 +1,16 @@
 import TenantSeeder from '#database/seeders/main/index_seeder'
 import Tenant from '#models/tenant'
-import { BaseCommand } from '@adonisjs/core/ace'
+import { BaseCommand, flags } from '@adonisjs/core/ace'
 
 import db from '@adonisjs/lucid/services/db'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 
 export default class TenantSeed extends BaseCommand {
-  declare shortname?: string
   static commandName = 'tenant:seed'
   static description = 'Seed data into tenant databases'
+
+  @flags.string({ description: 'Shortname of the tenant to migrate' })
+  declare shortname?: string
 
   static options: CommandOptions = {
     startApp: true,
@@ -67,7 +69,7 @@ export default class TenantSeed extends BaseCommand {
       },
       debug: false,
       seeders: {
-        paths: ['./database/seeders/tenant'],
+        paths: ['./database/seeders'],
       },
     })
 
