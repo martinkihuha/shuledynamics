@@ -3,6 +3,7 @@ import { beforeFetch, belongsTo, column } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Campus from './campus.js'
 import Country from './country.js'
 import Curriculum from './curriculum.js'
 import Gender from './gender.js'
@@ -14,10 +15,16 @@ export default class Guardian extends AppBaseModel {
   declare id: number
 
   @column()
+  declare campusId: number
+
+  @column()
   declare countryId: number
 
   @column()
   declare religionId: number
+
+  @column()
+  declare nationalId: string
 
   @column()
   declare name: string
@@ -47,6 +54,9 @@ export default class Guardian extends AppBaseModel {
   static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Guardian>) {
     query.whereNull('deletedAt')
   }
+
+  @belongsTo(() => Campus)
+  declare campus: BelongsTo<typeof Campus>
 
   @belongsTo(() => Country)
   declare country: BelongsTo<typeof Country>

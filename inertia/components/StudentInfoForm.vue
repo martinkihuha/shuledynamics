@@ -29,7 +29,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 const isLoading = ref(false)
 const today = new Date().toISOString().split('T')[0]
 const countries = ref<Country[]>([])
-const curriculums = ref<Curriculum[]>([])
+const curricula = ref<Curriculum[]>([])
 const genders = ref<Gender[]>([])
 const grades = ref<Grade[]>([])
 const religions = ref<Religion[]>([])
@@ -51,16 +51,16 @@ const fetchCountries = async () => {
   }
 }
 
-const fetchCurriculums = async () => {
+const fetchCurricula = async () => {
   try {
-    const response = await fetch('/api/curriculums', {
+    const response = await fetch('/api/curricula', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     })
-    curriculums.value = await response.json()
+    curricula.value = await response.json()
   } catch (error) {
     console.error('Error fetching curriculums:', error)
   }
@@ -143,7 +143,7 @@ const fetchStudentStatuses = async () => {
 
 onMounted(() => {
   fetchCountries()
-  fetchCurriculums()
+  fetchCurricula()
   fetchGenders()
   fetchGrades()
   fetchReligions()
@@ -442,7 +442,7 @@ const onSubmit = handleSubmit((values) => {
               </FormControl>
               <SelectContent>
                 <SelectItem
-                  v-for="item in curriculums"
+                  v-for="item in curricula"
                   :key="item?.id"
                   :value="item?.id?.toString()"
                   class="text-xs"

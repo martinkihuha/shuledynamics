@@ -3,11 +3,15 @@ import { beforeFetch, belongsTo, column } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Campus from './campus.js'
 import Grade from './grade.js'
 
 export default class Stream extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare campusId: number
 
   @column()
   declare gradeId: number
@@ -28,6 +32,9 @@ export default class Stream extends AppBaseModel {
   static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Stream>) {
     query.whereNull('deletedAt')
   }
+
+  @belongsTo(() => Campus)
+  declare campus: BelongsTo<typeof Campus>
 
   @belongsTo(() => Grade)
   declare grade: BelongsTo<typeof Grade>

@@ -26,7 +26,7 @@ export default class Grade extends AppBaseModel {
 
   @beforeFetch()
   static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Grade>) {
-    query.whereNull('deletedAt')
+    query.whereNull('grades.deleted_at')
   }
 
   @belongsTo(() => Curriculum)

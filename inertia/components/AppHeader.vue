@@ -36,7 +36,7 @@ const { open, toggleSidebar } = useSidebar()
               <span class="sr-only">Toggle Sidebar</span>
             </button>
           </TooltipTrigger>
-          <TooltipContent side="bottom" class="text-xs border bg-card text-secondary-foreground">
+          <TooltipContent side="bottom" class="text-xs border bg-card text-muted-foreground">
             <p>{{ open ? 'Hide' : 'Show' }} Sidebar</p>
           </TooltipContent>
         </Tooltip>

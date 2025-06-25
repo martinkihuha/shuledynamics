@@ -8,10 +8,10 @@ export default class extends BaseSeeder {
     const uniqueKey = 'name'
 
     await Salutation.updateOrCreateMany(uniqueKey, [
-      { name: 'Christianity' },
-      { name: 'Islam' },
-      { name: 'Hindu' },
-      { name: 'Other' },
+      { name: 'Mr.' },
+      { name: 'Mrs.' },
+      { name: 'Ms.' },
+      { name: 'Dr.' },
     ])
   }
 }

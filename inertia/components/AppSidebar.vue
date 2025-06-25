@@ -77,14 +77,14 @@ const handleSubItemClick = () => {
   <!-- Remove v-model:open -->
   <Sidebar collapsible="icon" variant="sidebar">
     <SidebarHeader
-      class="h-12 bg-card border-b p-0 group-has-data-[collapsible=icon]/sidebar-wrapper:py-2"
+      class="h-12 bg-card border-b p-0 group-has-data-[collapsible=icon]/sidebar-wrapper:p-2"
     >
       <AppLogo />
     </SidebarHeader>
 
     <SidebarContent class="bg-card">
       <SidebarGroup>
-        <SidebarGroupLabel class="text-muted-foreground">Main Menu</SidebarGroupLabel>
+        <SidebarGroupLabel class="text-muted-foreground text-[10px]">Main Menu</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu v-if="modules">
             <SidebarMenuItem v-for="item in modules" :key="item?.id">
@@ -96,7 +96,7 @@ const handleSubItemClick = () => {
                 class="text-xs transition-all duration-300 rounded-xs hover:bg-secondary-foreground/10"
                 asChild
               >
-                <Link :href="item?.url" class="text-xs" @click="handleSubItemClick">
+                <Link :href="item?.url" @click="handleSubItemClick">
                   <Icon
                     :icon="currentPath.includes(item?.url) ? item?.iconSolid : item?.icon"
                     class="transition-all duration-300"
@@ -114,7 +114,7 @@ const handleSubItemClick = () => {
     </SidebarContent>
 
     <SidebarFooter
-      class="h-12 bg-card border-t p-0 group-has-data-[collapsible=icon]/sidebar-wrapper:py-2"
+      class="h-12 bg-card border-t p-0 group-has-data-[collapsible=icon]/sidebar-wrapper:p-2"
     >
       <NavUser />
     </SidebarFooter>

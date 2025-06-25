@@ -107,7 +107,7 @@ const onSubmit = handleSubmit((values) => {
       icon to delete an item
     </p>
 
-    <div class="space-y-4">
+    <div class="space-y-4 -ml-2 md:space-y-6">
       <div
         v-for="(item, i) in store?.result?.previousSchools"
         :key="i"

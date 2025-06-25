@@ -3,11 +3,15 @@ import { beforeFetch, belongsTo, column } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Campus from './campus.js'
 import Curriculum from './curriculum.js'
 
 export default class AcademicYear extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare campusId: number
 
   @column()
   declare curriculumId: number
@@ -37,6 +41,9 @@ export default class AcademicYear extends AppBaseModel {
   static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof AcademicYear>) {
     query.whereNull('deletedAt')
   }
+
+  @belongsTo(() => Campus)
+  declare campus: BelongsTo<typeof Campus>
 
   @belongsTo(() => Curriculum)
   declare curriculum: BelongsTo<typeof Curriculum>

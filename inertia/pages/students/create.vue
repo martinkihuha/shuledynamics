@@ -2,7 +2,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { store } from '@/lib/student'
 
-import StudentTab from '#models/student_tab'
+import SystemTab from '#models/system_tab'
 
 import {
   Breadcrumb,
@@ -19,6 +19,7 @@ import AppHeader from '@/components/AppHeader.vue'
 import StudentInfoForm from '@/components/StudentInfoForm.vue'
 import GuardianInfoForm from '@/components/GuardianInfoForm.vue'
 import EducationHistoryForm from '@/components/EducationHistoryForm.vue'
+import ClassInfoForm from '@/components/ClassInfoForm.vue'
 
 const props = defineProps<{
   result: any
@@ -26,34 +27,34 @@ const props = defineProps<{
 }>()
 
 const activeTab = ref(1)
-const studentTabs = ref<StudentTab[]>([])
+const systemTabs = ref<SystemTab[]>([])
 const tabInfo = computed(() => {
   let content = 'Hapa'
   if (activeTab.value !== 1) {
-    content = studentTabs.value.find((tab) => tab?.id === activeTab.value - 1)?.title ?? 'Hapa'
+    content = systemTabs.value.find((tab: any) => tab?.id === activeTab.value - 1)?.title ?? 'Hapa'
   }
   return content
 })
 
-const fetchStudentTabs = async () => {
+const fetchSystemTabs = async () => {
   try {
-    const response = await fetch('/api/student-tabs', {
+    const response = await fetch('/api/system-tabs?search=student', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     })
-    studentTabs.value = await response.json()
+    systemTabs.value = await response.json()
   } catch (error) {
-    console.error('Error fetching student tabs:', error)
+    console.error('Error fetching system tabs:', error)
   }
 }
 
 onMounted(() => {
   store.result = JSON.parse(JSON.stringify(props.result))
 
-  fetchStudentTabs()
+  fetchSystemTabs()
 })
 </script>
 
@@ -105,7 +106,7 @@ onMounted(() => {
         class="flex items-center justify-between w-full divide-x divide-stone-200 dark:divide-stone-400"
       >
         <li
-          v-for="tab in studentTabs"
+          v-for="tab in systemTabs"
           :key="tab?.id"
           class="inline-flex items-center w-full gap-2 px-3 text-xs h-9 hover:bg-accent first:rounded-tl-sm last:rounded-tr-sm"
           :class="{
@@ -131,6 +132,7 @@ onMounted(() => {
             <StudentInfoForm v-if="activeTab === 1" />
             <GuardianInfoForm v-else-if="activeTab === 2" />
             <EducationHistoryForm v-else-if="activeTab === 3" />
+            <ClassInfoForm v-else-if="activeTab === 4" />
 
             <p v-else>
               First complete the
@@ -140,7 +142,7 @@ onMounted(() => {
               >
                 {{ tabInfo }}
               </b>
-              tab
+              tab.
             </p>
           </div>
         </div>

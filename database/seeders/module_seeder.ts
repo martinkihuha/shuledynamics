@@ -123,8 +123,8 @@ export default class extends BaseSeeder {
       {
         title: 'System Settings',
         url: '/system',
-        icon: 'heroicons:cog',
-        iconSolid: 'heroicons:cog-solid',
+        icon: 'heroicons:cog-6-tooth',
+        iconSolid: 'heroicons:cog-6-tooth-solid',
         listOrder: 17,
       },
     ])

@@ -10,7 +10,7 @@ import Country from '#models/country'
 import Curriculum from '#models/curriculum'
 import Relationship from '#models/relationship'
 import Religion from '#models/religion'
-import Student from '#models/student'
+import Salutation from '#models/salutation'
 
 import { Card } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -30,7 +30,7 @@ const countries = ref<Country[]>([])
 const curriculums = ref<Curriculum[]>([])
 const relationships = ref<Relationship[]>([])
 const religions = ref<Religion[]>([])
-const students = ref<Student[]>([])
+const salutations = ref<Salutation[]>([])
 
 const fetchCountries = async () => {
   try {
@@ -92,18 +92,18 @@ const fetchReligions = async () => {
   }
 }
 
-const fetchStudents = async () => {
+const fetchSalutations = async () => {
   try {
-    const response = await fetch('/api/students', {
+    const response = await fetch('/api/salutations', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     })
-    students.value = await response.json()
+    salutations.value = await response.json()
   } catch (error) {
-    console.error('Error fetching students:', error)
+    console.error('Error fetching salutations:', error)
   }
 }
 
@@ -112,12 +112,15 @@ onMounted(() => {
   fetchCurriculums()
   fetchRelationships()
   fetchReligions()
-  fetchStudents()
+  fetchSalutations()
 })
 
 const formSchema = z.object({
   countryId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Country' }),
   religionId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Religion' }),
+  salutationId: z
+    .union([z.number(), z.string()])
+    .refine((v) => !!v, { message: 'Invalid Salutation' }),
   name: z.string().refine((v) => !!v, { message: 'Invalid Name' }),
   email: z.string().refine((v) => !!v, { message: 'Invalid Email' }),
   mobile: z.string().refine((v) => !!v, { message: 'Invalid Mobile Number' }),
@@ -161,7 +164,38 @@ const onSubmit = handleSubmit((values) => {
 
     <Card class="p-4 rounded bg-muted">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-6">
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="salutationId">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Salutation
+              </FormLabel>
+
+              <Select v-bind="componentField">
+                <FormControl class="rounded bg-card">
+                  <SelectTrigger class="w-full">
+                    <SelectValue placeholder="Salutation" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem
+                    v-for="item in salutations"
+                    :key="item?.id"
+                    :value="item?.id?.toString()"
+                    class="text-xs"
+                  >
+                    {{ item?.name }}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
           <FormField v-slot="{ componentField }" name="name">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
@@ -184,7 +218,7 @@ const onSubmit = handleSubmit((values) => {
           </FormField>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-2">
           <FormField v-slot="{ componentField }" name="relationshipId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
@@ -292,7 +326,7 @@ const onSubmit = handleSubmit((values) => {
           </FormField>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-4">
           <FormField v-slot="{ componentField }" name="location">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
@@ -315,7 +349,7 @@ const onSubmit = handleSubmit((values) => {
           </FormField>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-2">
           <FormField v-slot="{ componentField }" name="countryId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">

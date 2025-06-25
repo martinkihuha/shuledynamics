@@ -88,8 +88,6 @@ const backgroundSvgs = computed(() => [
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
-      <span></span>
     </div>
   </AppHeader>
 

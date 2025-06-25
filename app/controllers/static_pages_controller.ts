@@ -11,4 +11,8 @@ export default class StaticPagesController {
 
     return inertia.render('dashboard', { title: 'Dashboard', quickLinks })
   }
+
+  async system({ inertia }: HttpContext) {
+    return inertia.render('system/index', { title: 'System Settings' })
+  }
 }

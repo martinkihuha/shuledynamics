@@ -7,6 +7,13 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table
+        .integer('campus_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('campuses')
+        .onDelete('CASCADE')
+      table
         .integer('country_id')
         .unsigned()
         .notNullable()
@@ -27,6 +34,7 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('religions')
         .onDelete('CASCADE')
+      table.string('national_id').notNullable().defaultTo('')
       table.string('name').notNullable().defaultTo('')
       table.string('email').notNullable().defaultTo('')
       table.string('mobile').notNullable().defaultTo('')

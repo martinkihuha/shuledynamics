@@ -27,9 +27,15 @@ export default class extends BaseSeeder {
     await this.seed(await import('#database/seeders/religion_seeder'))
     await this.seed(await import('#database/seeders/tax_seeder'))
     await this.seed(await import('#database/seeders/module_seeder'))
+    await this.seed(await import('#database/seeders/salutation_seeder'))
+    await this.seed(await import('#database/seeders/campus_seeder'))
     await this.seed(await import('#database/seeders/curriculum_seeder'))
+    await this.seed(await import('#database/seeders/campus_curriculum_seeder'))
+    await this.seed(await import('#database/seeders/role_seeder'))
+    await this.seed(await import('#database/seeders/campus_role_seeder'))
     await this.seed(await import('#database/seeders/grade_seeder'))
     await this.seed(await import('#database/seeders/student_status_seeder'))
-    await this.seed(await import('#database/seeders/student_tab_seeder'))
+    await this.seed(await import('#database/seeders/system_tab_seeder'))
+    await this.seed(await import('#database/seeders/campus_curriculum_grade_seeder'))
   }
 }

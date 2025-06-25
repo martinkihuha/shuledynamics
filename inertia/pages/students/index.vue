@@ -71,27 +71,55 @@ onMounted(() => {
               class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
             >
               <Icon icon="heroicons:plus" class="size-4" />
-              <span class="text-nowrap">Enroll a Student</span>
+              <span class="text-nowrap">Admit New Student</span>
             </Link>
           </TooltipTrigger>
           <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-            <p>Click to enroll a student</p>
+            <p>Click to admit a student</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
 
-    <Card class="py-0 rounded bg-card/80">
+    <Card class="p-0 rounded bg-card/80">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
-          <tr class="border-b text-[10px] divide-x divide-card bg-muted text-muted-foreground">
-            <th class="px-3 py-2 text-left text-nowrap">Name</th>
-            <th class="p-2 text-left text-nowrap">Age</th>
-            <th class="p-2 text-left text-nowrap">Gender</th>
-            <th class="p-2 text-left text-nowrap">Class</th>
-            <th class="p-2 text-left text-nowrap">Stream</th>
-            <th class="p-2 text-right text-nowrap">Balance</th>
-            <th class="w-2/12 px-3 py-2 text-left text-nowrap">Status</th>
+          <tr class="text-[10px] divide-x divide-card">
+            <th
+              class="px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Name
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Age
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Gender
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Class
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Stream
+            </th>
+            <th
+              class="p-2 text-right text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Balance
+            </th>
+            <th
+              class="w-2/12 px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Status
+            </th>
           </tr>
         </thead>
 

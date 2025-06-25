@@ -1,10 +1,12 @@
 import { DateTime } from 'luxon'
-import { beforeFetch, column, hasMany } from '@adonisjs/lucid/orm'
+import { beforeFetch, column, hasMany, hasManyThrough, manyToMany } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { HasMany, HasManyThrough, ManyToMany } from '@adonisjs/lucid/types/relations'
 import AcademicYear from './academic_year.js'
 import Grade from './grade.js'
+import Campus from './campus.js'
+import CampusCurriculumGrade from './campus_curriculum_grade.js'
 
 export default class Curriculum extends AppBaseModel {
   @column({ isPrimary: true })
@@ -24,12 +26,20 @@ export default class Curriculum extends AppBaseModel {
 
   @beforeFetch()
   static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Curriculum>) {
-    query.whereNull('deletedAt')
+    query.whereNull('curricula.deleted_at')
   }
 
   @hasMany(() => AcademicYear)
   declare academicYears: HasMany<typeof AcademicYear>
 
-  @hasMany(() => Grade)
-  declare grades: HasMany<typeof Grade>
+  @manyToMany(() => Campus, { pivotTable: 'campus_curriculum' })
+  declare campuses: ManyToMany<typeof Campus>
+
+  @hasManyThrough([() => Grade, () => CampusCurriculumGrade], {
+    localKey: 'id',
+    foreignKey: 'curriculumId',
+    throughLocalKey: 'gradeId',
+    throughForeignKey: 'id',
+  })
+  declare grades: HasManyThrough<typeof Grade>
 }

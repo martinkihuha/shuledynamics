@@ -1,5 +1,6 @@
 import Curriculum from '#models/curriculum'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
+// import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   static environment = ['development', 'test', 'production']
@@ -8,9 +9,10 @@ export default class extends BaseSeeder {
     const uniqueKey = 'name'
 
     await Curriculum.updateOrCreateMany(uniqueKey, [
-      { name: 'CBC' },
-      { name: 'IGCSE' },
-      { name: '8-4-4' },
+      { name: 'CBC', deletedAt: null },
+      { name: 'IGCSE', deletedAt: null },
+      // { name: '8-4-4', deletedAt: DateTime.local() },
+      { name: '8-4-4', deletedAt: null },
     ])
   }
 }

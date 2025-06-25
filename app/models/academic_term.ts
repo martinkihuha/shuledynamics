@@ -4,10 +4,14 @@ import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import AcademicYear from './academic_year.js'
+import Campus from './campus.js'
 
 export default class AcademicTerm extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare campusId: number
 
   @column()
   declare academicYearId: number
@@ -46,4 +50,7 @@ export default class AcademicTerm extends AppBaseModel {
 
   @belongsTo(() => AcademicYear)
   declare academicYear: BelongsTo<typeof AcademicYear>
+
+  @belongsTo(() => Campus)
+  declare campus: BelongsTo<typeof Campus>
 }

@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.string('db_name').notNullable()
       table.string('db_user').notNullable()
       table.string('db_pasw').nullable()
+      table.string('motto').nullable()
       table.string('phone').nullable()
       table.string('email').nullable()
       table.string('website').nullable()

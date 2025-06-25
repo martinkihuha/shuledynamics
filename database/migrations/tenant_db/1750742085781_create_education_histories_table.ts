@@ -7,6 +7,13 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table
+        .integer('campus_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('campuses')
+        .onDelete('CASCADE')
+      table
         .integer('county_id')
         .unsigned()
         .notNullable()
