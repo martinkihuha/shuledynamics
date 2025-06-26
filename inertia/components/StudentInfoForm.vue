@@ -202,7 +202,7 @@ const onSubmit = handleSubmit((values) => {
       (<Icon icon="mdi:asterisk" class="-mx-1 text-red-500 size-2" />) are required!
     </p>
 
-    <Card class="p-4 rounded bg-muted">
+    <Card class="p-4 rounded bg-muted dark:bg-card">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField v-slot="{ componentField }" name="name">
           <FormItem class="flex flex-col gap-1">

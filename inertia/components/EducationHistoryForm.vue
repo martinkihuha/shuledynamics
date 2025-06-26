@@ -107,7 +107,7 @@ const onSubmit = handleSubmit((values) => {
       icon to delete an item
     </p>
 
-    <div class="space-y-4 -ml-2 md:space-y-6">
+    <div class="-ml-2 space-y-4 md:space-y-6">
       <div
         v-for="(item, i) in store?.result?.previousSchools"
         :key="i"
@@ -131,7 +131,7 @@ const onSubmit = handleSubmit((values) => {
           </Tooltip>
         </TooltipProvider>
 
-        <Card class="w-full p-4 rounded bg-muted">
+        <Card class="p-4 rounded bg-muted dark:bg-card">
           <div class="grid grid-cols-1 gap-4 md:grid-cols-6">
             <div class="md:col-span-3">
               <FormField

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { watch, onMounted } from 'vue'
 import { store } from '@/lib/utils'
 
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
@@ -11,6 +11,7 @@ import AlertBanner from '@/components/AlertBanner.vue'
 const props = defineProps<{
   currentPath: string
   notification: any
+  school: any
 }>()
 
 watch(
@@ -31,6 +32,16 @@ watch(
   },
   { deep: true }
 )
+
+onMounted(() => {
+  if (props?.school?.shortname === 'shule1') {
+    store.authUser.email = 'mkenya@shule1.example'
+  }
+
+  if (props?.school?.shortname === 'shule2') {
+    store.authUser.email = 'mkenya@shule2.example'
+  }
+})
 </script>
 
 <template>
