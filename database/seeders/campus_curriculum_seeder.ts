@@ -13,24 +13,32 @@ export default class extends BaseSeeder {
         created_at: DateTime.now(),
         updated_at: DateTime.now(),
       },
-      {
-        campus_id: 1,
-        curriculum_id: 2,
-        created_at: DateTime.now(),
-        updated_at: DateTime.now(),
-      },
+      // {
+      //   campus_id: 1,
+      //   curriculum_id: 2,
+      //   created_at: DateTime.now(),
+      //   updated_at: DateTime.now(),
+      // },
       {
         campus_id: 2,
         curriculum_id: 1,
         created_at: DateTime.now(),
         updated_at: DateTime.now(),
       },
+
       {
         campus_id: 2,
-        curriculum_id: 3,
+        curriculum_id: 2,
         created_at: DateTime.now(),
         updated_at: DateTime.now(),
       },
+
+      // {
+      //   campus_id: 2,
+      //   curriculum_id: 3,
+      //   created_at: DateTime.now(),
+      //   updated_at: DateTime.now(),
+      // },
     ]
 
     await Database.table('campus_curriculum').multiInsert(campusCurriculumData)

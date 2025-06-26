@@ -115,6 +115,11 @@ onMounted(() => {
               Email
             </th>
             <th
+              class="p-2 text-left md:w-48 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
+            >
+              Website
+            </th>
+            <th
               class="p-2 text-left bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
               Address
@@ -146,8 +151,12 @@ onMounted(() => {
                 <div>{{ item?.name }}</div>
               </Link>
             </td>
-            <td class="px-2 py-1 text-nowrap">{{ item?.phone1 }}</td>
+            <td class="px-2 py-1 text-nowrap">
+              <div v-if="item?.phone1">{{ item?.phone1 }}</div>
+              <div v-if="item?.phone2">{{ item?.phone2 }}</div>
+            </td>
             <td class="px-2 py-1 text-nowrap">{{ item?.email }}</td>
+            <td class="px-2 py-1 text-nowrap">{{ item?.website }}</td>
             <td class="px-2 py-1">
               <div>{{ item?.physicalAddress }}</div>
               <div v-if="item?.postalAddress && item?.postalCode">

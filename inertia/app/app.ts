@@ -9,7 +9,7 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { Icon } from '@iconify/vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 
-const appName = import.meta.env.VITE_APP_NAME || 'ShuleDynamics'
+const appName = import.meta.env.VITE_APP_NAME || 'Shule Dynamics'
 
 createInertiaApp({
   progress: { color: '#5468FF' },

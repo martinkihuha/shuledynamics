@@ -1,5 +1,6 @@
 import Module from '#models/module'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   static environment = ['development', 'test', 'production']
@@ -14,6 +15,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:home',
         iconSolid: 'heroicons:home-solid',
         listOrder: 1,
+        deletedAt: null,
       },
       {
         title: 'Tasks Management',
@@ -21,6 +23,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:rectangle-stack',
         iconSolid: 'heroicons:rectangle-stack-solid',
         listOrder: 2,
+        deletedAt: null,
       },
       {
         title: 'Applicants Tracker',
@@ -28,6 +31,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:user-circle',
         iconSolid: 'heroicons:user-circle-solid',
         listOrder: 3,
+        deletedAt: null,
       },
       {
         title: 'Students',
@@ -35,6 +39,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:users',
         iconSolid: 'heroicons:users-solid',
         listOrder: 4,
+        deletedAt: null,
       },
       {
         title: 'Finances',
@@ -42,6 +47,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:banknotes',
         iconSolid: 'heroicons:banknotes-solid',
         listOrder: 5,
+        deletedAt: null,
       },
       {
         title: 'Assessments',
@@ -49,6 +55,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:clipboard-document-list',
         iconSolid: 'heroicons:clipboard-document-list-solid',
         listOrder: 6,
+        deletedAt: null,
       },
       {
         title: 'School Management',
@@ -56,6 +63,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:academic-cap',
         iconSolid: 'heroicons:academic-cap-solid',
         listOrder: 7,
+        deletedAt: null,
       },
       {
         title: 'Staff Management',
@@ -63,6 +71,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:user-group',
         iconSolid: 'heroicons:user-group-solid',
         listOrder: 8,
+        deletedAt: null,
       },
       {
         title: 'Communication',
@@ -70,6 +79,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:chat-bubble-left-right',
         iconSolid: 'heroicons:chat-bubble-left-right-solid',
         listOrder: 9,
+        deletedAt: null,
       },
       {
         title: 'Transport',
@@ -77,6 +87,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:truck',
         iconSolid: 'heroicons:truck-solid',
         listOrder: 10,
+        deletedAt: null,
       },
       {
         title: 'Library',
@@ -84,6 +95,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:building-library',
         iconSolid: 'heroicons:building-library-solid',
         listOrder: 11,
+        deletedAt: null,
       },
       {
         title: 'Stores & Inventory',
@@ -91,6 +103,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:home-modern',
         iconSolid: 'heroicons:home-modern-solid',
         listOrder: 12,
+        deletedAt: null,
       },
       {
         title: 'e-Learning',
@@ -98,6 +111,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:computer-desktop',
         iconSolid: 'heroicons:computer-desktop-solid',
         listOrder: 13,
+        deletedAt: DateTime.now(),
       },
       {
         title: 'Guardian Portal',
@@ -105,6 +119,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:user',
         iconSolid: 'heroicons:user-solid',
         listOrder: 14,
+        deletedAt: DateTime.now(),
       },
       {
         title: 'Student Portal',
@@ -112,6 +127,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:user-circle',
         iconSolid: 'heroicons:user-circle-solid',
         listOrder: 15,
+        deletedAt: DateTime.now(),
       },
       {
         title: 'Reports Center',
@@ -119,6 +135,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:chart-pie',
         iconSolid: 'heroicons:chart-pie-solid',
         listOrder: 16,
+        deletedAt: null,
       },
       {
         title: 'System Settings',
@@ -126,6 +143,7 @@ export default class extends BaseSeeder {
         icon: 'heroicons:cog-6-tooth',
         iconSolid: 'heroicons:cog-6-tooth-solid',
         listOrder: 17,
+        deletedAt: null,
       },
     ])
   }

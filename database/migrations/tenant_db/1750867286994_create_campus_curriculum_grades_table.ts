@@ -6,12 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table
-        .integer('campus_curriculum_id')
-        .unsigned()
-        .references('id')
-        .inTable('campus_curriculum')
-        .onDelete('CASCADE')
+      table.integer('campus_id').unsigned().references('id').inTable('campuses').onDelete('CASCADE')
       table
         .integer('curriculum_id')
         .unsigned()
@@ -25,7 +20,7 @@ export default class extends BaseSchema {
       table.timestamp('updated_at').nullable()
 
       // Add unique constraint
-      table.unique(['campus_curriculum_id', 'curriculum_id', 'grade_id'])
+      table.unique(['campus_id', 'curriculum_id', 'grade_id'])
     })
   }
 

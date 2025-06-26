@@ -9,8 +9,8 @@ export default class extends BaseSeeder {
     const uniqueKey = 'name'
 
     await Curriculum.updateOrCreateMany(uniqueKey, [
-      { name: 'CBC', deletedAt: null },
-      { name: 'IGCSE', deletedAt: null },
+      { name: 'C.B.C.', deletedAt: null },
+      { name: 'I.G.C.S.E.', deletedAt: null },
       // { name: '8-4-4', deletedAt: DateTime.local() },
       { name: '8-4-4', deletedAt: null },
     ])

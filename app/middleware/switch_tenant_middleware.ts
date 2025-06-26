@@ -15,7 +15,7 @@ export default class SwitchTenantMiddleware {
     }
 
     if (instance === '127.0.0.1:3333' || instance === 'localhost:3333') {
-      instance = 'shule2'
+      instance = 'shule1'
     } else {
       instance = instance.split('.')[0]
     }

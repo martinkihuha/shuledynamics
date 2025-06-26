@@ -24,10 +24,11 @@ export default class CampusesController {
 
   async show({ inertia, params }: HttpContext) {
     const result = await Campus.query()
-      .where('id', params.id)
+      .where('id', params?.id)
       .preload('country')
       .preload('county')
-      .preload('curriculums', (c) => c.preload('grades'))
+      .preload('curriculums')
+      .preload('grades', (g) => g.preload('grade'))
       .firstOrFail()
 
     return inertia.render('system/campus/show', { result, title: result?.name })

@@ -44,7 +44,7 @@ watch(
     <AppSidebar :current-path="currentPath" />
 
     <main class="flex flex-col w-full">
-      <SidebarInset class="flex-grow w-full bg-gradient-to-br from-primary/10 to-secondary/10">
+      <SidebarInset class="flex-grow w-full bg-gradient-to-br from-primary/15 to-secondary/15">
         <slot></slot>
       </SidebarInset>
     </main>

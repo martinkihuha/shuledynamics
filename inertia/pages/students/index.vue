@@ -113,7 +113,7 @@ onMounted(() => {
             <th
               class="p-2 text-right text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
-              Balance
+              Fees Balance
             </th>
             <th
               class="w-2/12 px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"

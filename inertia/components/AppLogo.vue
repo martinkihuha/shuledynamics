@@ -14,9 +14,9 @@ import logoSrc from '@/images/icon.png'
       >
         <Link href="/" class="flex items-center w-full text-xl">
           <img :src="logoSrc" alt="Shule Dynamics logo" class="size-7" />
-          <div class="inline-flex items-center">
-            <span class="text-primary">Shule</span
-            ><span class="font-thin text-secondary">Dynamics</span>
+          <div class="inline-flex items-center gap-0">
+            <span class="text-primary">Shule</span>
+            <span class="font-extralight text-secondary">Dynamics</span>
           </div>
         </Link>
       </SidebarMenuButton>

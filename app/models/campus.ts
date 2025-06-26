@@ -1,12 +1,13 @@
 import { DateTime } from 'luxon'
-import { beforeFetch, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import { beforeFetch, belongsTo, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Country from './country.js'
 import County from './county.js'
 import Curriculum from './curriculum.js'
 import Role from './role.js'
+import CampusCurriculumGrade from './campus_curriculum_grade.js'
 
 export default class Campus extends AppBaseModel {
   @column({ isPrimary: true })
@@ -67,6 +68,9 @@ export default class Campus extends AppBaseModel {
 
   @manyToMany(() => Curriculum, { pivotTable: 'campus_curriculum' })
   declare curriculums: ManyToMany<typeof Curriculum>
+
+  @hasMany(() => CampusCurriculumGrade)
+  declare grades: HasMany<typeof CampusCurriculumGrade>
 
   @manyToMany(() => Role, { pivotTable: 'campus_role' })
   declare roles: ManyToMany<typeof Role>

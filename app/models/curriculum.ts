@@ -35,6 +35,9 @@ export default class Curriculum extends AppBaseModel {
   @manyToMany(() => Campus, { pivotTable: 'campus_curriculum' })
   declare campuses: ManyToMany<typeof Campus>
 
+  @hasMany(() => CampusCurriculumGrade)
+  declare campusCurriculumGrades: HasMany<typeof CampusCurriculumGrade>
+
   @hasManyThrough([() => Grade, () => CampusCurriculumGrade], {
     localKey: 'id',
     foreignKey: 'curriculumId',

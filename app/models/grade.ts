@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { beforeFetch, belongsTo, column } from '@adonisjs/lucid/orm'
+import { beforeFetch, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Curriculum from './curriculum.js'
+import CampusCurriculumGrade from './campus_curriculum_grade.js'
 
 export default class Grade extends AppBaseModel {
   @column({ isPrimary: true })
@@ -31,4 +32,7 @@ export default class Grade extends AppBaseModel {
 
   @belongsTo(() => Curriculum)
   declare curriculum: BelongsTo<typeof Curriculum>
+
+  @hasMany(() => CampusCurriculumGrade)
+  declare campusCurriculumGrades: HasMany<typeof CampusCurriculumGrade>
 }

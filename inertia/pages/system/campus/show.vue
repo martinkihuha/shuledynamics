@@ -14,7 +14,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
-import Grade from '#models/grade'
 
 defineProps<{
   school: any
@@ -134,7 +133,12 @@ onMounted(() => {
             <td class="p-2 text-right text-nowrap">{{ i + 1 }}</td>
             <td class="p-2 text-nowrap">{{ item?.name }}</td>
             <td class="p-2 text-nowrap">
-              {{ item?.grades?.map((grade: Grade) => grade?.name).join(', ') }}
+              {{
+                result?.grades
+                  ?.filter((g: any) => g?.curriculumId === item?.id)
+                  .map((gd: any) => gd?.grade?.name)
+                  .join(', ')
+              }}
             </td>
           </tr>
         </tbody>

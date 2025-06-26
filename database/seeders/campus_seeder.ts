@@ -11,15 +11,15 @@ export default class extends BaseSeeder {
       {
         countryId: 114, // Default to Kenya
         countyId: 47, // Default to Nairobi County
-        // name: 'Kasuku Campus',
-        name: 'Upperhill Campus',
+        name: 'Kasuku Campus',
+        // name: 'Upperhill Campus',
         phone1: '+254 700 000 001',
-        // email: 'info@shule1.com',
-        email: 'info@shule2.com',
-        // website: 'www.shule1.com',
-        website: 'www.shule2.com',
-        // physicalAddress: 'Kasuku Road, Kilimani',
-        physicalAddress: 'ACK Garden Annex, First Ngong Avenue',
+        email: 'info@shule1.example',
+        // email: 'info@shule2.example',
+        website: 'www.shule1.example',
+        // website: 'www.shule2.example',
+        physicalAddress: 'Kasuku Road, Kilimani',
+        // physicalAddress: 'ACK Garden Annex, First Ngong Avenue',
         postalAddress: '51236',
         postalCode: '00200',
         logoUrl:
@@ -28,15 +28,15 @@ export default class extends BaseSeeder {
       {
         countryId: 114, // Default to Kenya
         countyId: 47, // Default to Nairobi County
-        // name: 'Karen Campus',
-        name: 'Kilimani Campus',
+        name: 'Karen Campus',
+        // name: 'Kilimani Campus',
         phone1: '+254 700 000 002',
-        // email: 'info@shule1.com',
-        email: 'info@shule2.com',
-        // website: 'www.shule1.com',
-        website: 'www.shule2.com',
-        // physicalAddress: 'Mokoyeti Road, East, Karen',
-        physicalAddress: 'Theta Lane off Lenana Road, Kilimani',
+        email: 'info@shule1.example',
+        // email: 'info@shule2.example',
+        website: 'www.shule1.example',
+        // website: 'www.shule2.example',
+        physicalAddress: 'Mokoyeti Road, East, Karen',
+        // physicalAddress: 'Theta Lane off Lenana Road, Kilimani',
         logoUrl:
           'https://firebasestorage.googleapis.com/v0/b/garisafi.appspot.com/o/orodha%2Flogos%2Forodha_0001.png?alt=media&token=5f26b454-eae7-42c6-8fc7-7768eab3f1ee',
       },

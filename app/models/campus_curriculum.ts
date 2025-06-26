@@ -5,9 +5,8 @@ import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Campus from './campus.js'
 import Curriculum from './curriculum.js'
-import Grade from './grade.js'
 
-export default class CampusCurriculumGrade extends AppBaseModel {
+export default class CampusCurriculum extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -16,9 +15,6 @@ export default class CampusCurriculumGrade extends AppBaseModel {
 
   @column({ columnName: 'curriculum_id' })
   declare curriculumId: number
-
-  @column({ columnName: 'grade_id' })
-  declare gradeId: number
 
   @column.dateTime({ serializeAs: null })
   declare deletedAt: DateTime | null
@@ -30,8 +26,8 @@ export default class CampusCurriculumGrade extends AppBaseModel {
   declare updatedAt: DateTime
 
   @beforeFetch()
-  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof CampusCurriculumGrade>) {
-    query.whereNull('campus_curriculum_grades.deleted_at')
+  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof CampusCurriculum>) {
+    query.whereNull('campus_curriculum.deleted_at')
   }
 
   @belongsTo(() => Campus)
@@ -39,7 +35,4 @@ export default class CampusCurriculumGrade extends AppBaseModel {
 
   @belongsTo(() => Curriculum)
   declare curriculum: BelongsTo<typeof Curriculum>
-
-  @belongsTo(() => Grade)
-  declare grade: BelongsTo<typeof Grade>
 }
