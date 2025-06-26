@@ -54,11 +54,12 @@ onMounted(() => {
                 class="flex items-center gap-2 text-xs transition-all duration-300 text-primary hover:underline"
               >
                 <Icon icon="heroicons:cog-6-tooth-solid" class="size-4" />
-                <span>System Settings</span>
+                <span class="block md:hidden">System </span>
+                <span class="hidden md:block">System Settings</span>
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator class="hidden md:block" />
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink as-child>
               <Link
@@ -66,11 +67,12 @@ onMounted(() => {
                 class="flex items-center gap-2 text-xs transition-all duration-300 text-primary hover:underline"
               >
                 <Icon icon="heroicons:building-office-2-solid" class="size-4" />
-                <span>Campus Management</span>
+                <span class="block md:hidden">Campuses</span>
+                <span class="hidden md:block">Campus Management</span>
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator class="hidden md:block" />
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage class="flex items-center gap-2 text-xs truncate text-muted-foreground">
               <Icon icon="heroicons:building-office" class="size-4" />
@@ -109,7 +111,7 @@ onMounted(() => {
         <thead>
           <tr class="text-[10px] divide-x divide-card">
             <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+              class="p-2 text-left rounded-tl text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             ></th>
             <th
               class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
@@ -117,7 +119,7 @@ onMounted(() => {
               Curriculum
             </th>
             <th
-              class="w-full p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+              class="w-full p-2 text-left rounded-tr text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
               Classes
             </th>
@@ -131,9 +133,14 @@ onMounted(() => {
             class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
             :class="{ 'bg-muted': i % 2 !== 0 }"
           >
-            <td class="py-2 pl-1 pr-0.5 text-right text-nowrap">{{ i + 1 }}.</td>
+            <td
+              class="p-2 text-right text-nowrap"
+              :class="{ 'rounded-bl': i === result?.curriculms?.length - 1 }"
+            >
+              {{ i + 1 }}.
+            </td>
             <td class="p-2 text-nowrap">{{ item?.name }}</td>
-            <td class="p-2 text-nowrap">
+            <td class="p-2" :class="{ 'rounded-br': i === result?.curriculms?.length - 1 }">
               {{
                 result?.grades
                   ?.filter((g: any) => g?.curriculumId === item?.id)

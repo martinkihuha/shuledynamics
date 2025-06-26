@@ -55,15 +55,17 @@ onMounted(() => {
                 class="flex items-center gap-2 text-xs transition-all duration-300 text-primary hover:underline"
               >
                 <Icon icon="heroicons:cog-6-tooth-solid" class="size-4" />
-                <span>System Settings</span>
+                <span class="block md:hidden">System </span>
+                <span class="hidden md:block">System Settings</span>
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator class="hidden md:block" />
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage class="flex items-center gap-2 text-xs truncate text-muted-foreground">
               <Icon icon="heroicons:building-office-2" class="size-4" />
-              <span>{{ title }}</span>
+              <span class="block md:hidden">Campuses</span>
+              <span class="hidden md:block">Campus Management</span>
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
@@ -71,7 +73,7 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="w-full p-2 space-y-3 sm:px-4">
+  <div class="w-full p-4 space-y-6 md:space-y-4">
     <div class="flex items-center justify-between w-full gap-2">
       <h1>{{ school?.fullname }} Campuses</h1>
 
@@ -93,12 +95,12 @@ onMounted(() => {
       </TooltipProvider> -->
     </div>
 
-    <Card class="p-0 border-none rounded">
+    <Card class="hidden p-0 border-none rounded sm:block">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
           <tr class="text-[10px] divide-x divide-card">
             <th
-              class="p-2 md:w-12 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
+              class="p-2 rounded-tl md:w-12 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
             >
               Logo
             </th>
@@ -123,7 +125,7 @@ onMounted(() => {
               Website
             </th>
             <th
-              class="p-2 text-left bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+              class="p-2 text-left rounded-tr bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
               Address
             </th>
@@ -137,7 +139,7 @@ onMounted(() => {
             class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
             :class="{ 'bg-muted': i % 2 !== 0 }"
           >
-            <td class="p-1 text-nowrap">
+            <td class="p-1 text-nowrap" :class="{ 'rounded-bl': i === results?.data?.length - 1 }">
               <img
                 v-if="item?.logoUrl"
                 :src="item?.logoUrl"
@@ -160,7 +162,7 @@ onMounted(() => {
             </td>
             <td class="px-2 py-1 text-nowrap">{{ item?.email }}</td>
             <td class="px-2 py-1 text-nowrap">{{ item?.website }}</td>
-            <td class="px-2 py-1">
+            <td class="px-2 py-1" :class="{ 'rounded-br': i === results?.data?.length - 1 }">
               <div>{{ item?.physicalAddress }}</div>
               <div v-if="item?.postalAddress && item?.postalCode">
                 P.O. Box {{ item?.postalAddress }} - {{ item?.postalCode }}
@@ -172,6 +174,78 @@ onMounted(() => {
       </table>
     </Card>
 
-    <AppPagination :meta="results?.meta" current-path="/system/campus" />
+    <div class="block space-y-6 sm:hidden">
+      <Card v-for="(item, i) in results?.data" :key="item?.id" class="p-0 border-none rounded">
+        <Link :href="`/system/campus/${item?.id}`" class="text-xs divide-y">
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:building-office-solid" class="size-4 text-primary" />
+
+              <span>Campus</span>
+            </div>
+
+            <div>
+              <div class="text-sm">{{ school?.fullname }}</div>
+              <div class="text-xs text-accent-foreground">{{ item?.name }}</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:phone-solid" class="size-4 text-primary" />
+
+              <span>Phone</span>
+            </div>
+
+            <div>
+              <div v-if="item?.phone1">{{ item?.phone1 }}</div>
+              <div v-if="item?.phone2">{{ item?.phone2 }}</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:envelope-solid" class="size-4 text-primary" />
+
+              <span>Email</span>
+            </div>
+
+            <div>{{ item?.email }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:globe-alt-solid" class="size-4 text-primary" />
+
+              <span>Website</span>
+            </div>
+
+            <div>{{ item?.website }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:map-solid" class="size-4 text-primary" />
+
+              <span>Address</span>
+            </div>
+
+            <div>
+              <div>{{ item?.physicalAddress }}</div>
+              <div v-if="item?.postalAddress && item?.postalCode">
+                P.O. Box {{ item?.postalAddress }} - {{ item?.postalCode }}
+              </div>
+              <div>{{ item?.county?.name }}, {{ item?.country?.name }}</div>
+            </div>
+          </div>
+        </Link>
+      </Card>
+    </div>
+
+    <AppPagination
+      v-if="results?.data?.length"
+      :meta="results?.meta"
+      current-path="/system/campus"
+    />
   </div>
 </template>

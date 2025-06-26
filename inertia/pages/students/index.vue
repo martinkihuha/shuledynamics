@@ -59,7 +59,7 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="w-full p-2 space-y-4 sm:px-4">
+  <div class="w-full p-4 space-y-6 md:space-y-4">
     <div class="flex items-center justify-between w-full gap-2">
       <AppSearch />
 
@@ -81,12 +81,12 @@ onMounted(() => {
       </TooltipProvider>
     </div>
 
-    <Card class="p-0 border-none rounded">
+    <Card class="hidden p-0 border-none rounded sm:block">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
           <tr class="text-[10px] divide-x divide-card">
             <th
-              class="px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+              class="px-3 py-2 text-left rounded-tl text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
               Name
             </th>
@@ -116,7 +116,7 @@ onMounted(() => {
               Fees Balance
             </th>
             <th
-              class="w-2/12 px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+              class="w-2/12 px-3 py-2 text-left rounded-tr text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
             >
               Status
             </th>
@@ -155,6 +155,82 @@ onMounted(() => {
       </table>
     </Card>
 
-    <AppPagination :meta="results?.meta" current-path="/students" />
+    <div class="block space-y-6 sm:hidden">
+      <Card v-for="(item, i) in results?.data" :key="item?.id" class="p-0 border-none rounded">
+        <Link :href="`/students/${item?.id}`" class="text-xs divide-y">
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:user-circle-solid" class="size-4 text-primary" />
+
+              <span>Name</span>
+            </div>
+
+            <div>{{ item?.name }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:phone-solid" class="size-4 text-primary" />
+
+              <span>Age</span>
+            </div>
+
+            <div>{{ item?.age }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:envelope-solid" class="size-4 text-primary" />
+
+              <span>Gender</span>
+            </div>
+
+            <div>{{ item?.gender?.name }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:globe-alt-solid" class="size-4 text-primary" />
+
+              <span>Class</span>
+            </div>
+
+            <div>{{ item?.class }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:map-solid" class="size-4 text-primary" />
+
+              <span>Stream</span>
+            </div>
+
+            <div>{{ item?.stream }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:banknotes-solid" class="size-4 text-primary" />
+
+              <span>Fees Balance</span>
+            </div>
+
+            <div>{{ formatCurrency(item?.currency?.name, item?.balance) }}</div>
+          </div>
+
+          <div class="flex items-center justify-between gap-8 p-2">
+            <div class="flex items-center gap-2 text-accent-foreground">
+              <Icon icon="heroicons:map-solid" class="size-4 text-primary" />
+
+              <span>Status</span>
+            </div>
+
+            <div>{{ item?.status }}</div>
+          </div>
+        </Link>
+      </Card>
+    </div>
+
+    <AppPagination v-if="results?.data?.length" :meta="results?.meta" current-path="/students" />
   </div>
 </template>

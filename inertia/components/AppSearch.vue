@@ -19,7 +19,7 @@ watchDebounced(
 </script>
 
 <template>
-  <Card class="relative w-auto p-0 rounded shadow-none sm:w-1/2 m-0">
+  <Card class="relative w-full p-0 m-0 rounded shadow-none sm:w-1/2">
     <Input
       v-model="searchInput"
       type="search"

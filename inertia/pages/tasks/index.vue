@@ -56,7 +56,7 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="w-full p-2 space-y-4 sm:px-4">
+  <div class="w-full p-4 space-y-6 md:space-y-4">
     <div class="flex items-center justify-between w-full gap-2">
       <AppSearch />
 

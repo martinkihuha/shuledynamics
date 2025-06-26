@@ -88,7 +88,7 @@ onMounted(() => {
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator class="hidden md:block" />
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage class="flex items-center gap-2 text-xs truncate text-muted-foreground">
               <Icon icon="heroicons:plus" class="size-4" />
@@ -102,7 +102,9 @@ onMounted(() => {
 
   <div class="w-full p-2 space-y-4 sm:p-4">
     <Card class="gap-0 p-0 rounded-sm">
-      <ul class="flex items-center justify-between w-full divide-x divide-stone-300">
+      <ul
+        class="flex items-center justify-between w-full overflow-x-auto divide-x divide-stone-300"
+      >
         <li
           v-for="tab in systemTabs"
           :key="tab?.id"
@@ -124,7 +126,7 @@ onMounted(() => {
         </li>
       </ul>
 
-      <div class="p-4 text-sm">
+      <div class="p-4 text-xs">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <div class="md:col-span-2">
             <StudentInfoForm v-if="activeTab === 1" />
