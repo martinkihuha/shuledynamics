@@ -91,18 +91,15 @@ const handleSubItemClick = () => {
               <SidebarMenuButton
                 :tooltip="item?.title"
                 :class="{
-                  'bg-primary/5 text-primary': currentPath.includes(item?.url),
+                  'bg-primary text-primary-foreground': currentPath.includes(item?.url),
                 }"
-                class="text-xs transition-all duration-300 rounded-xs hover:bg-primary/10"
+                class="text-xs transition-all duration-300 rounded-xs hover:bg-primary hover:text-primary-foreground"
                 asChild
               >
                 <Link :href="item?.url" @click="handleSubItemClick">
                   <Icon
                     :icon="currentPath.includes(item?.url) ? item?.iconSolid : item?.icon"
                     class="transition-all duration-300"
-                    :class="
-                      currentPath.includes(item?.url) ? 'text-primary' : 'text-muted-foreground/80'
-                    "
                   />
                   <span>{{ item?.title }}</span>
                 </Link>
