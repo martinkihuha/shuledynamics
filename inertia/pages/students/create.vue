@@ -102,17 +102,15 @@ onMounted(() => {
 
   <div class="w-full p-2 space-y-4 sm:p-4">
     <Card class="gap-0 p-0 rounded-sm">
-      <ul
-        class="flex items-center justify-between w-full divide-x divide-stone-200 dark:divide-stone-400"
-      >
+      <ul class="flex items-center justify-between w-full divide-x divide-stone-300">
         <li
           v-for="tab in systemTabs"
           :key="tab?.id"
           class="inline-flex items-center w-full gap-2 px-3 text-xs h-9 hover:bg-accent first:rounded-tl-sm last:rounded-tr-sm"
           :class="{
-            'bg-card text-primary font-semibold hover:bg-card cursor-not-allowed':
+            'bg-card text-primary font-semibold hover:bg-card cursor-not-allowed dark:border-stone-700 dark:text-white':
               activeTab === tab?.id,
-            'bg-accent text-accent-foreground border-b border-stone-200 dark:border-stone-800 font-medium cursor-pointer':
+            'bg-accent text-accent-foreground border-b border-stone-300 dark:border-stone-700 font-medium cursor-pointer':
               activeTab !== tab?.id,
           }"
           @click="activeTab = tab?.id"

@@ -25,50 +25,62 @@ const backgroundSvgs = computed(() => [
   {
     id: 'svg-1',
     class: 'top-0 left-0 rotate-0 scale-50',
+    fill: '#2563EB',
   },
   {
     id: 'svg-2',
     class: 'top-5 left-5 rotate-10 scale-100',
+    fill: '#16A34A',
   },
   {
     id: 'svg-3',
     class: '-top-5 left-10 rotate-80 scale-120',
+    fill: '#2563EB',
   },
   {
     id: 'svg-4',
-    class: 'bottom-2 right-0 rotate-0 scale-50',
+    class: 'bottom-7 right-14 rotate-0 scale-50',
+    fill: '#16A34A',
   },
   {
     id: 'svg-5',
     class: 'bottom-5 right-5 rotate-50 scale-100',
+    fill: '#2563EB',
   },
   {
     id: 'svg-6',
     class: '-bottom-5 right-10 rotate-80 scale-100',
+    fill: '#16A34A',
   },
   {
     id: 'svg-7',
     class: '-bottom-5 right-7/12 rotate-35 scale-200',
+    fill: '#2563EB',
   },
   {
     id: 'svg-8',
-    class: 'top-5 right-6/12 rotate-10 scale-100',
+    class: 'top-5 right-6/12 rotate-90 scale-120',
+    fill: '#16A34A',
   },
   {
     id: 'svg-9',
     class: '-top-5 right-6/12 rotate-90 scale-150',
+    fill: '#2563EB',
   },
   {
     id: 'svg-10',
-    class: '-bottom-5 right-3/12 rotate-35 scale-150',
+    class: '-bottom-5 right-4/12 rotate-35 scale-150',
+    fill: '#16A34A',
   },
   {
     id: 'svg-11',
-    class: '-top-5 right-4/12 rotate-90 scale-200',
+    class: '-top-5 right-4/12 rotate-100 scale-200',
+    fill: '#2563EB',
   },
   {
     id: 'svg-12',
     class: '-top-5 right-3/12 rotate-20 scale-100',
+    fill: '#16A34A',
   },
 ])
 </script>
@@ -100,20 +112,25 @@ const backgroundSvgs = computed(() => [
       <!-- Dynamically generated background SVG elements -->
       <svg
         v-for="svg in backgroundSvgs"
-        :key="svg.id"
-        viewBox="0 0 100 100"
+        :key="svg?.id"
+        viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
         class="absolute h-full opacity-5"
-        :class="svg.class"
+        :class="svg?.class"
       >
         <path
-          fill="#443BC9"
-          d="M19.2,-32.3C23.6,-30.7,25.1,-23,24,-16.6C22.8,-10.2,19,-5.1,18.4,-0.3C17.9,4.5,20.6,9,19.5,11.4C18.3,13.8,13.3,14.1,9.4,17.6C5.5,21.1,2.8,27.8,-2.1,31.5C-7,35.2,-14.1,35.9,-20.9,34.1C-27.7,32.3,-34.2,27.9,-38.9,21.8C-43.5,15.7,-46.3,7.9,-45,0.7C-43.8,-6.4,-38.5,-12.8,-32.1,-15.9C-25.7,-18.9,-18.1,-18.6,-12.6,-19.6C-7,-20.5,-3.5,-22.8,1.9,-26.1C7.4,-29.5,14.8,-33.9,19.2,-32.3Z"
-          transform="translate(50 50)"
-          style="transition: 0.3s"
-          stroke-width="0"
-        ></path>
+          :fill="svg?.fill"
+          d="M30.6,-52C41.5,-40.7,53.3,-35.2,58.6,-26.1C63.8,-16.9,62.4,-4.1,60.5,8.6C58.5,21.2,55.9,33.7,49,43.5C42.1,53.3,31,60.5,19.4,62.1C7.8,63.8,-4.3,59.9,-18.9,58.4C-33.5,56.9,-50.6,57.8,-60.9,50.3C-71.3,42.8,-74.9,27.1,-67.8,15.4C-60.7,3.7,-42.9,-3.9,-37,-17C-31.2,-30.2,-37.3,-48.9,-33.2,-63.3C-29,-77.7,-14.5,-87.9,-2.3,-84.3C9.9,-80.7,19.8,-63.4,30.6,-52Z"
+          transform="translate(100 100)"
+        />
       </svg>
+      <!-- <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path
+          fill="#2563EB"
+          d="M30.6,-52C41.5,-40.7,53.3,-35.2,58.6,-26.1C63.8,-16.9,62.4,-4.1,60.5,8.6C58.5,21.2,55.9,33.7,49,43.5C42.1,53.3,31,60.5,19.4,62.1C7.8,63.8,-4.3,59.9,-18.9,58.4C-33.5,56.9,-50.6,57.8,-60.9,50.3C-71.3,42.8,-74.9,27.1,-67.8,15.4C-60.7,3.7,-42.9,-3.9,-37,-17C-31.2,-30.2,-37.3,-48.9,-33.2,-63.3C-29,-77.7,-14.5,-87.9,-2.3,-84.3C9.9,-80.7,19.8,-63.4,30.6,-52Z"
+          transform="translate(100 100)"
+        />
+      </svg> -->
     </Card>
 
     <p class="-mb-3 font-medium text-muted-foreground md:pl-2">Quick Links</p>

@@ -7,7 +7,6 @@ import { z } from 'zod'
 import { router } from '@inertiajs/vue3'
 
 import Country from '#models/country'
-import Curriculum from '#models/curriculum'
 import Relationship from '#models/relationship'
 import Religion from '#models/religion'
 import Salutation from '#models/salutation'
@@ -27,7 +26,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 const isLoading = ref(false)
 const countries = ref<Country[]>([])
-const curriculums = ref<Curriculum[]>([])
 const relationships = ref<Relationship[]>([])
 const religions = ref<Religion[]>([])
 const salutations = ref<Salutation[]>([])
@@ -44,21 +42,6 @@ const fetchCountries = async () => {
     countries.value = await response.json()
   } catch (error) {
     console.error('Error fetching countries:', error)
-  }
-}
-
-const fetchCurriculums = async () => {
-  try {
-    const response = await fetch('/api/curriculums', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-    curriculums.value = await response.json()
-  } catch (error) {
-    console.error('Error fetching curriculums:', error)
   }
 }
 
@@ -109,7 +92,6 @@ const fetchSalutations = async () => {
 
 onMounted(() => {
   fetchCountries()
-  fetchCurriculums()
   fetchRelationships()
   fetchReligions()
   fetchSalutations()

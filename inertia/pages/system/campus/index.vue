@@ -71,7 +71,7 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="w-full p-2 space-y-2 sm:p-4">
+  <div class="w-full p-2 space-y-3 sm:px-4">
     <div class="flex items-center justify-between w-full gap-2">
       <h1>{{ school?.fullname }} Campuses</h1>
 
@@ -80,7 +80,7 @@ onMounted(() => {
           <TooltipTrigger as-child>
             <Link
               href="/system/campus/create"
-              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded-[2px] cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
             >
               <Icon icon="heroicons:plus" class="size-4" />
               <span class="text-nowrap">New Campus</span>
@@ -93,13 +93,15 @@ onMounted(() => {
       </TooltipProvider> -->
     </div>
 
-    <Card class="p-0 rounded bg-card/80">
+    <Card class="p-0 border-none rounded">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
           <tr class="text-[10px] divide-x divide-card">
             <th
-              class="p-1 text-left md:w-12 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
-            ></th>
+              class="p-2 md:w-12 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
+            >
+              Logo
+            </th>
             <th
               class="p-2 text-left md:w-32 bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20 text-nowrap"
             >
@@ -133,7 +135,7 @@ onMounted(() => {
             v-for="(item, i) in results?.data"
             :key="item?.id"
             class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
-            :class="{ 'bg-muted/80': i % 2 !== 0 }"
+            :class="{ 'bg-muted': i % 2 !== 0 }"
           >
             <td class="p-1 text-nowrap">
               <img

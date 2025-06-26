@@ -72,23 +72,23 @@ onMounted(() => {
     </div>
   </AppHeader>
 
-  <div class="grid md:grid-cols-2 gap-4 p-4">
+  <div class="grid gap-4 p-4 md:grid-cols-2">
     <Card v-for="item in systemTabs" :key="item?.id" class="rounded-sm">
       <CardHeader>
-        <CardTitle class="flex items-center gap-2 text-primary">
+        <CardTitle class="flex items-center gap-2">
           <Icon :icon="item?.iconSolid" class="size-8" />
           {{ item?.title }}
         </CardTitle>
       </CardHeader>
 
-      <CardContent class="-mt-2 text-sm">
+      <CardContent class="-mt-2 text-sm text-accent-foreground">
         <p>{{ item?.description }}</p>
       </CardContent>
 
       <CardFooter>
         <Link
           :href="item?.url"
-          class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded-xs cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+          class="flex items-center gap-2 px-3 text-xs transition-all duration-300 cursor-pointer rounded-xs h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
         >
           {{ item?.btnText }}
         </Link>

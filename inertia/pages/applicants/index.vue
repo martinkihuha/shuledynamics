@@ -10,6 +10,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { Card } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
@@ -60,13 +62,98 @@ onMounted(() => {
     <div class="flex items-center justify-between w-full gap-2">
       <AppSearch />
 
-      <Link
-        href="/applicants/create"
-        class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
-      >
-        <Icon icon="heroicons:plus" class="size-4" />
-        <span class="text-nowrap">New Applicant</span>
-      </Link>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Link
+              href="/applicants/create"
+              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded-[2px] cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+            >
+              <Icon icon="heroicons:plus" class="size-4" />
+              <span class="text-nowrap">New Applicant</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
+            <p>Click to create a new applicant</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
+
+    <Card class="p-0 border-none rounded">
+      <table class="min-w-full text-xs rounded table-fixed">
+        <thead>
+          <tr class="text-[10px] divide-x divide-card">
+            <th
+              class="px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Name
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Age
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Gender
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Class
+            </th>
+            <th
+              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Stream
+            </th>
+            <th
+              class="p-2 text-right text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Fees Balance
+            </th>
+            <th
+              class="w-2/12 px-3 py-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
+            >
+              Status
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y">
+          <tr
+            v-for="(item, i) in results?.data"
+            :key="item?.id"
+            class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
+            :class="{ 'bg-muted': i % 2 !== 0 }"
+          >
+            <td class="px-3 py-2 text-nowrap">
+              <Link
+                :href="`/students/${item?.id}`"
+                class="underline transition-all duration-300 text-primary hover:no-underline"
+              >
+                {{ item?.name }}
+              </Link>
+            </td>
+            <td class="p-2 text-nowrap">
+              {{ item?.age }}
+            </td>
+            <td class="p-2">{{ item?.gender?.name }}</td>
+            <td class="p-2">{{ item?.class }}</td>
+            <td class="p-2">{{ item?.stream }}</td>
+            <td class="p-2 text-right">
+              {{ formatCurrency(item?.currency?.name, item?.balance) }}
+            </td>
+            <td class="px-3 py-2 text-nowrap">
+              {{ item?.status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </Card>
+
+    <AppPagination :meta="results?.meta" current-path="/students" />
   </div>
 </template>

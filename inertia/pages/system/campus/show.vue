@@ -83,7 +83,7 @@ onMounted(() => {
   </AppHeader>
 
   <div class="w-full p-2 space-y-2 sm:px-4">
-    <div class="flex items-end justify-between w-full gap-2">
+    <div class="flex items-center justify-between w-full gap-2">
       <h1>{{ result?.name }} Curriculums</h1>
 
       <TooltipProvider>
@@ -91,7 +91,7 @@ onMounted(() => {
           <TooltipTrigger as-child>
             <Link
               href="/system/campus/create"
-              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+              class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded-[2px] cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
             >
               <Icon icon="heroicons:plus" class="size-4" />
               <span class="text-nowrap">New Curriculum</span>
@@ -104,7 +104,7 @@ onMounted(() => {
       </TooltipProvider>
     </div>
 
-    <Card class="p-0 rounded bg-card/80">
+    <Card class="p-0 border-none rounded">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
           <tr class="text-[10px] divide-x divide-card">
@@ -129,9 +129,9 @@ onMounted(() => {
             v-for="(item, i) in result?.curriculums"
             :key="item?.id"
             class="transition-all duration-300 divide-x divide-card hover:bg-primary/10"
-            :class="{ 'bg-muted/80': i % 2 !== 0 }"
+            :class="{ 'bg-muted': i % 2 !== 0 }"
           >
-            <td class="p-2 text-right text-nowrap">{{ i + 1 }}</td>
+            <td class="py-2 pl-1 pr-0.5 text-right text-nowrap">{{ i + 1 }}.</td>
             <td class="p-2 text-nowrap">{{ item?.name }}</td>
             <td class="p-2 text-nowrap">
               {{

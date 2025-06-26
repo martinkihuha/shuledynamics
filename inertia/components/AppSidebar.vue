@@ -84,16 +84,16 @@ const handleSubItemClick = () => {
 
     <SidebarContent class="bg-card">
       <SidebarGroup>
-        <SidebarGroupLabel class="text-muted-foreground text-[10px]">Main Menu</SidebarGroupLabel>
+        <SidebarGroupLabel class="text-[10px] font-semibold">Main Menu</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu v-if="modules">
             <SidebarMenuItem v-for="item in modules" :key="item?.id">
               <SidebarMenuButton
                 :tooltip="item?.title"
                 :class="{
-                  'bg-secondary-foreground/5 text-primary': currentPath.includes(item?.url),
+                  'bg-primary/5 text-primary': currentPath.includes(item?.url),
                 }"
-                class="text-xs transition-all duration-300 rounded-xs hover:bg-secondary-foreground/10"
+                class="text-xs transition-all duration-300 rounded-xs hover:bg-primary/10"
                 asChild
               >
                 <Link :href="item?.url" @click="handleSubItemClick">

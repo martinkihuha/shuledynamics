@@ -62,7 +62,7 @@ onMounted(() => {
 
       <Link
         href="/tasks/create"
-        class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
+        class="flex items-center gap-2 px-3 text-xs transition-all duration-300 rounded-[2px] cursor-pointer h-9 bg-primary text-primary-foreground md:px-6 hover:ring-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-offset-black"
       >
         <Icon icon="heroicons:plus" class="size-4" />
         <span class="text-nowrap">New Task</span>

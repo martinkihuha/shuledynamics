@@ -131,7 +131,7 @@ const onSubmit = handleSubmit((values) => {
           </Tooltip>
         </TooltipProvider>
 
-        <Card class="p-4 rounded bg-muted dark:bg-card">
+        <Card class="w-full p-4 rounded bg-muted dark:bg-card">
           <div class="grid grid-cols-1 gap-4 md:grid-cols-6">
             <div class="md:col-span-3">
               <FormField
