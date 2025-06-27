@@ -152,7 +152,9 @@ onMounted(() => {
 })
 
 const formSchema = z.object({
-  countryId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Country' }),
+  countryId: z
+    .union([z.number(), z.string()])
+    .refine((v) => !!v, { message: 'Invalid Nationality' }),
   curriculumId: z
     .union([z.number(), z.string()])
     .refine((v) => !!v, { message: 'Invalid Curriculum' }),
@@ -196,7 +198,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <form class="space-y-3" @submit="onSubmit">
+  <form class="space-y-4" @submit="onSubmit">
     <p class="flex items-center justify-start gap-1 text-xs">
       <span class="font-semibold text-red-500">Note:</span> All fields marked with an asterisk
       (<Icon icon="mdi:asterisk" class="-mx-1 text-red-500 size-2" />) are required!
@@ -330,13 +332,13 @@ const onSubmit = handleSubmit((values) => {
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Country
+              Nationality
             </FormLabel>
 
             <Select v-bind="componentField">
               <FormControl class="rounded bg-card">
                 <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Country" />
+                  <SelectValue placeholder="Nationality" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -346,7 +348,7 @@ const onSubmit = handleSubmit((values) => {
                   :value="item?.id?.toString()"
                   class="text-xs"
                 >
-                  {{ item?.name }}
+                  {{ item?.nationality }}
                 </SelectItem>
               </SelectContent>
             </Select>

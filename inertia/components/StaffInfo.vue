@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { store } from '@/lib/student'
+import { store } from '@/lib/staff'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
@@ -21,11 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import Gender from '#models/gender'
 
 const isLoading = ref(false)
 const countries = ref<Country[]>([])
+const genders = ref<Gender[]>([])
 const relationships = ref<Relationship[]>([])
 const religions = ref<Religion[]>([])
 const salutations = ref<Salutation[]>([])
@@ -42,6 +43,21 @@ const fetchCountries = async () => {
     countries.value = await response.json()
   } catch (error) {
     console.error('Error fetching countries:', error)
+  }
+}
+
+const fetchGenders = async () => {
+  try {
+    const response = await fetch('/api/genders', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+    genders.value = await response.json()
+  } catch (error) {
+    console.error('Error fetching genders:', error)
   }
 }
 
@@ -92,48 +108,29 @@ const fetchSalutations = async () => {
 
 onMounted(() => {
   fetchCountries()
+  fetchGenders()
   fetchRelationships()
   fetchReligions()
   fetchSalutations()
 })
 
-const guardianSchema = z.object({
+const formSchema = z.object({
   countryId: z
     .union([z.number(), z.string()])
     .refine((v) => !!v, { message: 'Invalid Nationality' }),
-  relationshipId: z
-    .union([z.number(), z.string()])
-    .refine((v) => !!v, { message: 'Invalid Relationship' }),
+  genderId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Gender' }),
   religionId: z.union([z.number(), z.string()]).refine((v) => !!v, { message: 'Invalid Religion' }),
   salutationId: z
     .union([z.number(), z.string()])
     .refine((v) => !!v, { message: 'Invalid Salutation' }),
+  nationalId: z.string().refine((v) => !!v, { message: 'Invalid National ID' }),
   name: z.string().refine((v) => !!v, { message: 'Invalid Name' }),
-  email: z.string().refine((v) => !!v, { message: 'Invalid Email' }),
-  mobile: z.string().refine((v) => !!v, { message: 'Invalid Mobile Number' }),
   location: z.string().refine((v) => !!v, { message: 'Invalid Location' }),
-})
-
-const formSchema = z.object({
-  guardians: z.array(guardianSchema).nonempty({ message: 'At least one guardian is required' }),
 })
 
 const { errors, handleSubmit } = useForm({
   validationSchema: toTypedSchema(formSchema),
-  initialValues: {
-    guardians: [
-      {
-        countryId: '',
-        relationshipId: '',
-        religionId: '',
-        salutationId: '',
-        name: '',
-        mobile: '',
-        email: '',
-        location: '',
-      },
-    ],
-  },
+  initialValues: store.result,
 })
 
 const onSubmit = handleSubmit((values) => {
@@ -166,14 +163,10 @@ const onSubmit = handleSubmit((values) => {
       (<Icon icon="mdi:asterisk" class="-mx-1 text-red-500 size-2" />) are required!
     </p>
 
-    <Card v-for="(item, i) in store?.guardians" :key="i" class="p-4 rounded bg-muted dark:bg-card">
+    <Card class="p-4 rounded bg-muted dark:bg-card">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-6">
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.salutationId"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].salutationId`"
-          >
+          <FormField v-slot="{ componentField }" name="salutationId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
@@ -204,17 +197,17 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField v-model="item.name" v-slot="{ componentField }" :name="`guardians[${i}].name`">
+          <FormField v-slot="{ componentField }" name="name">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-                Guardian Name
+                Full Name
               </FormLabel>
 
               <FormControl class="text-xs">
                 <Input
                   type="text"
-                  placeholder="Guardian Name"
+                  placeholder="Full Name"
                   autocomplete="off"
                   class="text-xs rounded h-9 bg-card"
                   v-bind="componentField"
@@ -227,26 +220,22 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.relationshipId"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].relationshipId`"
-          >
+          <FormField v-slot="{ componentField }" name="genderId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-                Relationship
+                Gender
               </FormLabel>
 
               <Select v-bind="componentField">
                 <FormControl class="rounded bg-card">
                   <SelectTrigger class="w-full">
-                    <SelectValue placeholder="Relationship" />
+                    <SelectValue placeholder="Gender" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   <SelectItem
-                    v-for="item in relationships"
+                    v-for="item in genders"
                     :key="item?.id"
                     :value="item?.id?.toString()"
                     class="text-xs"
@@ -262,14 +251,33 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.mobile"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].mobile`"
-          >
+          <FormField v-slot="{ componentField }" name="nationalId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                National ID
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="National ID"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="mobile">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
                 Mobile Number
               </FormLabel>
 
@@ -289,14 +297,10 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.email"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].email`"
-          >
+          <FormField v-slot="{ componentField }" name="email">
             <FormItem class="flex flex-col gap-1">
-              <FormLabel class="text-[10px] flex items-center gap-1">
-                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
                 Email
               </FormLabel>
 
@@ -316,11 +320,76 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.religionId"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].religionId`"
-          >
+          <FormField v-slot="{ componentField }" name="pinNumber">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                PIN Number
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="PIN Number"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="nssfNumber">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                NSSF Number
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="NSSF Number"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="shifNumber">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                SHIF Number
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="SHIF Number"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="religionId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
@@ -351,11 +420,7 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-4">
-          <FormField
-            v-model="item.location"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].location`"
-          >
+          <FormField v-slot="{ componentField }" name="location">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
@@ -378,11 +443,53 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="sm:col-span-2">
-          <FormField
-            v-model="item.countryId"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].countryId`"
-          >
+          <FormField v-slot="{ componentField }" name="postalAddress">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                Postal Address
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Postal Address"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="postalCode">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                Postal Code
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Postal Code"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField v-slot="{ componentField }" name="countryId">
             <FormItem class="flex flex-col gap-1">
               <FormLabel class="text-[10px] flex items-center gap-1">
                 <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
@@ -411,81 +518,10 @@ const onSubmit = handleSubmit((values) => {
             </FormItem>
           </FormField>
         </div>
-
-        <div class="sm:col-span-6">
-          <FormField
-            v-model="item.notes"
-            v-slot="{ componentField }"
-            :name="`guardians[${i}].notes`"
-          >
-            <FormItem class="flex flex-col gap-1">
-              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
-                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
-                Notes
-              </FormLabel>
-
-              <FormControl class="text-xs">
-                <Textarea
-                  placeholder="Notes"
-                  autocomplete="off"
-                  class="text-xs rounded bg-card"
-                  v-bind="componentField"
-                />
-              </FormControl>
-
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </div>
-
-        <div class="flex items-center justify-center gap-2 md:col-span-6">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <button
-                  type="button"
-                  class="h-8 bg-secondary text-secondary-foreground text-xs rounded-[2px] flex items-center gap-2 px-4 hover:ring-2 hover:ring-offset-2 hover:ring-secondary dark:hover:ring-offset-black transition-all duration-300"
-                  @click="store.addGuardian"
-                >
-                  <Icon icon="heroicons:plus" class="size-4" />
-                  <span>Add another Guardian</span>
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-                <p>Add a previous school</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <button
-                  type="button"
-                  class="h-8 text-red-50 text-xs rounded-[2px] flex items-center gap-2 px-4"
-                  :class="
-                    store?.guardians?.length < 2
-                      ? 'bg-red-600/30 cursor-not-allowed'
-                      : 'bg-red-600 hover:ring-2 hover:ring-offset-2 hover:ring-red-600 dark:hover:ring-offset-black transition-all duration-300'
-                  "
-                  :disable="store?.guardians?.length < 2"
-                  @click="store.delGuardian(i)"
-                >
-                  <Icon icon="heroicons:trash" class="size-4" />
-                  <span>Remove this Guardian</span>
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-                <p v-if="store?.guardians?.length < 2">Must have atleast 1 guardian</p>
-                <p v-else>Delete this guardian</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
       </div>
     </Card>
 
-    <div class="flex items-center justify-center w-full gap-3 pt-1">
+    <div class="flex items-center justify-center w-full gap-3">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger as-child>
@@ -498,7 +534,7 @@ const onSubmit = handleSubmit((values) => {
             </button>
           </TooltipTrigger>
           <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-            <p>Validate and save this student's information</p>
+            <p>Validate and save this staff's information</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -507,7 +543,7 @@ const onSubmit = handleSubmit((values) => {
         <Tooltip>
           <TooltipTrigger as-child>
             <Link
-              href="/students"
+              href="/staff"
               class="h-9 bg-muted-foreground text-muted text-xs rounded-[2px] flex items-center gap-2 px-8 hover:ring-2 hover:ring-offset-2 hover:ring-muted-foreground dark:hover:ring-offset-black transition-all duration-300"
             >
               <Icon icon="heroicons:no-symbol-16-solid" class="size-4" />
@@ -515,7 +551,7 @@ const onSubmit = handleSubmit((values) => {
             </Link>
           </TooltipTrigger>
           <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-            <p>Reset and return to the students listing</p>
+            <p>Reset and return to the staff listing</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -8,6 +8,7 @@ import Country from './country.js'
 import Curriculum from './curriculum.js'
 import Grade from './grade.js'
 import Religion from './religion.js'
+import Salutation from './salutation.js'
 
 export default class Guardian extends AppBaseModel {
   @column({ isPrimary: true })
@@ -21,6 +22,9 @@ export default class Guardian extends AppBaseModel {
 
   @column()
   declare religionId: number
+
+  @column()
+  declare salutationId: number
 
   @column()
   declare nationalId: string
@@ -68,4 +72,7 @@ export default class Guardian extends AppBaseModel {
 
   @belongsTo(() => Religion)
   declare religion: BelongsTo<typeof Religion>
+
+  @belongsTo(() => Salutation)
+  declare salutation: BelongsTo<typeof Salutation>
 }

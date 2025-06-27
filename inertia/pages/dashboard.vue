@@ -107,7 +107,7 @@ const backgroundSvgs = computed(() => [
     <Card class="relative gap-0 p-4 overflow-hidden rounded-lg shadow-none md:pb-8">
       <div class="text-[11px] text-muted-foreground">{{ formatDate(new Date().toString()) }}</div>
       <h2 class="text-lg font-medium tracking-tight">
-        {{ greeting }}, <span class="text-primary">{{ store.authUser.name }}</span>
+        {{ greeting }}, <span class="text-accent-foreground/80">{{ store.authUser.name }}</span>
       </h2>
       <!-- Dynamically generated background SVG elements -->
       <svg

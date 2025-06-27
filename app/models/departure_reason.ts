@@ -3,18 +3,12 @@ import { beforeFetch, column } from '@adonisjs/lucid/orm'
 import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 
-export default class Country extends AppBaseModel {
+export default class DepartureReason extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare isoCode: string
-
-  @column()
   declare name: string
-
-  @column()
-  declare nationality: string
 
   @column.dateTime({ serializeAs: null })
   declare deletedAt: DateTime | null
@@ -26,7 +20,7 @@ export default class Country extends AppBaseModel {
   declare updatedAt: DateTime
 
   @beforeFetch()
-  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Country>) {
+  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof DepartureReason>) {
     query.whereNull('deletedAt')
   }
 }

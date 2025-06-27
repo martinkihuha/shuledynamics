@@ -8,6 +8,7 @@ import Country from './country.js'
 import Curriculum from './curriculum.js'
 import Gender from './gender.js'
 import Religion from './religion.js'
+import Salutation from './salutation.js'
 
 export default class StaffMember extends AppBaseModel {
   @column({ isPrimary: true })
@@ -24,6 +25,9 @@ export default class StaffMember extends AppBaseModel {
 
   @column()
   declare religionId: number
+
+  @column()
+  declare salutationId: number
 
   @column()
   declare nationalId: string
@@ -47,16 +51,13 @@ export default class StaffMember extends AppBaseModel {
   declare postalCode: string | null
 
   @column()
-  declare notes: string | null
-
-  @column()
   declare pinNumber: string | null
 
   @column()
   declare nssfNumber: string | null
 
   @column()
-  declare nhifNumber: string | null
+  declare shifNumber: string | null
 
   @column.dateTime({ serializeAs: null })
   declare deletedAt: DateTime | null
@@ -86,4 +87,7 @@ export default class StaffMember extends AppBaseModel {
 
   @belongsTo(() => Religion)
   declare religion: BelongsTo<typeof Religion>
+
+  @belongsTo(() => Salutation)
+  declare salutation: BelongsTo<typeof Salutation>
 }

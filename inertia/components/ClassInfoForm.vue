@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { store } from '@/lib/class_info'
+import { store } from '@/lib/student'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
@@ -92,7 +92,7 @@ const formSchema = z.object({
 
 const { errors, handleSubmit } = useForm({
   validationSchema: toTypedSchema(formSchema),
-  initialValues: store.result,
+  initialValues: store.classInfo,
 })
 
 const onSubmit = handleSubmit((values) => {
@@ -119,7 +119,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <form class="space-y-3" @submit="onSubmit">
+  <form class="space-y-4" @submit="onSubmit">
     <p class="flex items-center justify-start gap-1 text-xs">
       <span class="font-semibold text-red-500">Note:</span> All fields marked with an asterisk
       (<Icon icon="mdi:asterisk" class="-mx-1 text-red-500 size-2" />) are required!

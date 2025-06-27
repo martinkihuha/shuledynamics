@@ -13,12 +13,14 @@ export default class extends BaseSeeder {
         created_at: DateTime.now(),
         updated_at: DateTime.now(),
       },
+
       // {
       //   campus_id: 1,
       //   curriculum_id: 2,
       //   created_at: DateTime.now(),
       //   updated_at: DateTime.now(),
       // },
+
       {
         campus_id: 2,
         curriculum_id: 1,

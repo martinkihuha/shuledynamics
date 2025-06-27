@@ -36,6 +36,7 @@ export default class extends BaseSeeder {
     await this.seed(await import('#database/seeders/grade_seeder'))
     await this.seed(await import('#database/seeders/student_status_seeder'))
     await this.seed(await import('#database/seeders/system_tab_seeder'))
+    await this.seed(await import('#database/seeders/departure_reason_seeder'))
     await this.seed(await import('#database/seeders/campus_curriculum_grade_seeder'))
   }
 }

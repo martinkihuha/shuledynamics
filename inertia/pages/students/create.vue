@@ -131,7 +131,7 @@ onMounted(() => {
       </ul>
 
       <div class="p-4 text-xs">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div class="md:col-span-2">
             <StudentInfoForm v-if="activeTab === 1" />
             <GuardianInfoForm v-else-if="activeTab === 2" />

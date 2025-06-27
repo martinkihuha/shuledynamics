@@ -34,6 +34,13 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('religions')
         .onDelete('CASCADE')
+      table
+        .integer('salutation_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('salutations')
+        .onDelete('CASCADE')
       table.string('national_id').notNullable().defaultTo('')
       table.string('name').notNullable().defaultTo('')
       table.string('email').notNullable().defaultTo('')

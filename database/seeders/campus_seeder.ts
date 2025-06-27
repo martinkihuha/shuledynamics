@@ -20,8 +20,8 @@ export default class extends BaseSeeder {
         // website: 'www.shule2.example',
         physicalAddress: 'Kasuku Road, Kilimani',
         // physicalAddress: 'ACK Garden Annex, First Ngong Avenue',
-        postalAddress: '51236',
-        postalCode: '00200',
+        postalAddress: '65432',
+        postalCode: '00100',
         logoUrl:
           'https://firebasestorage.googleapis.com/v0/b/garisafi.appspot.com/o/orodha%2Flogos%2Forodha_0000.png?alt=media&token=625c6896-6246-4a31-8f7f-d6066ab7aaf2',
       },

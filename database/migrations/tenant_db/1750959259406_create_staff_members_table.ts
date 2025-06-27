@@ -34,6 +34,13 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('religions')
         .onDelete('CASCADE')
+      table
+        .integer('salutation_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('salutations')
+        .onDelete('CASCADE')
       table.string('national_id').notNullable().defaultTo('')
       table.string('name').notNullable().defaultTo('')
       table.string('email').notNullable().defaultTo('')
@@ -43,7 +50,7 @@ export default class extends BaseSchema {
       table.string('postal_code').nullable().defaultTo('')
       table.string('pin_number').nullable().defaultTo('')
       table.string('nssf_number').nullable().defaultTo('')
-      table.string('nhif_number').nullable().defaultTo('')
+      table.string('shif_number').nullable().defaultTo('')
 
       table.timestamp('deleted_at').nullable()
       table.timestamp('created_at').nullable()

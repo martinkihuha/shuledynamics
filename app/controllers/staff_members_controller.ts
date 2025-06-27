@@ -1,8 +1,8 @@
 import Campus from '#models/campus'
 import Country from '#models/country'
 import Gender from '#models/gender'
-import Grade from '#models/grade'
 import Religion from '#models/religion'
+import Salutation from '#models/salutation'
 import StaffMember from '#models/staff_member'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -30,7 +30,7 @@ export default class StaffMembersController {
       .orderBy('id')
       .paginate(page, limit)
 
-    return inertia.render('staff/index', { results, title: 'Staff Members' })
+    return inertia.render('staff/index', { results, title: 'Staff' })
   }
 
   async create({ inertia }: HttpContext) {
@@ -38,15 +38,15 @@ export default class StaffMembersController {
       id: '',
       campusId: '', // Will be set based on the user's campus
       campus: <Campus>{},
-      countryId: '114', // Default to Kenya
+      countryId: '',
       country: <Country>{},
       genderId: '',
       gender: <Gender>{},
-      gradeId: '',
-      grade: <Grade>{},
       religionId: '',
       religion: <Religion>{},
-      admissionNo: '',
+      salutationId: '',
+      salutation: <Salutation>{},
+      nationalId: '',
       name: '',
       mobile: '',
       email: '',

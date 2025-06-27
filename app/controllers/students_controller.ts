@@ -35,7 +35,7 @@ export default class StudentsController {
   async create({ inertia }: HttpContext) {
     const result = {
       id: '',
-      countryId: '114', // Default to Kenya
+      countryId: '',
       country: <Country>{},
       curriculumId: '',
       curriculum: <Curriculum>{},

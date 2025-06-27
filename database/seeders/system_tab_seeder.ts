@@ -115,9 +115,16 @@ export default class extends BaseSeeder {
       {
         parent: 'Staff',
         title: 'Responsibilities',
-        icon: 'heroicons:clipboard-document-check',
-        iconSolid: 'heroicons:clipboard-document-check-solid',
+        icon: 'heroicons:clipboard-document-list',
+        iconSolid: 'heroicons:clipboard-document-list-solid',
         listOrder: 15,
+      },
+      {
+        parent: 'Staff',
+        title: 'Emergency Contacts',
+        icon: 'heroicons:phone',
+        iconSolid: 'heroicons:phone-solid',
+        listOrder: 16,
       },
     ])
   }

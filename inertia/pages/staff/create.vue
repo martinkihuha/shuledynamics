@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import { store } from '@/lib/student'
+import { store } from '@/lib/staff'
 
 import SystemTab from '#models/system_tab'
 
@@ -16,6 +16,7 @@ import { Card } from '@/components/ui/card'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import StaffInfo from '@/components/StaffInfo.vue'
 
 const props = defineProps<{
   result: any
@@ -85,7 +86,6 @@ onMounted(() => {
               >
                 <Icon icon="heroicons:user-group-solid" class="size-4" />
                 <span>Staff</span>
-                <span class="hidden md:block">Management</span>
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -128,9 +128,9 @@ onMounted(() => {
       </ul>
 
       <div class="p-4 text-xs">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div class="md:col-span-2">
-            <p v-if="activeTab === 12">Staff Information</p>
+            <StaffInfo v-if="activeTab === 12" />
 
             <p v-else>
               First complete the
