@@ -84,40 +84,14 @@ onMounted(() => {
     <Card class="hidden p-0 border-none rounded sm:block">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
-          <tr class="text-[10px] divide-x divide-card">
-            <th
-              class="px-3 py-2 text-left rounded-tl text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Name
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Age
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Gender
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Class
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Stream
-            </th>
-            <th
-              class="p-2 text-right text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Fees Balance
-            </th>
-            <th
-              class="w-2/12 px-3 py-2 text-left rounded-tr text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
+          <tr class="text-[10px] divide-x divide-card border-b">
+            <th class="px-3 py-2 text-left rounded-tl text-nowrap bg-muted-foreground/10">Name</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Age</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Gender</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Class</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Stream</th>
+            <th class="p-2 text-right text-nowrap bg-muted-foreground/10">Fees Balance</th>
+            <th class="w-2/12 px-3 py-2 text-left rounded-tr text-nowrap bg-muted-foreground/10">
               Status
             </th>
           </tr>

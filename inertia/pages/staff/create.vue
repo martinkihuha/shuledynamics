@@ -16,21 +16,17 @@ import { Card } from '@/components/ui/card'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
-import StudentInfoForm from '@/components/StudentInfoForm.vue'
-import GuardianInfoForm from '@/components/GuardianInfoForm.vue'
-import EducationHistoryForm from '@/components/EducationHistoryForm.vue'
-import ClassInfoForm from '@/components/ClassInfoForm.vue'
 
 const props = defineProps<{
   result: any
   title: string
 }>()
 
-const activeTab = ref(1)
+const activeTab = ref(12)
 const systemTabs = ref<SystemTab[]>([])
 const tabInfo = computed(() => {
   let content = 'Hapa'
-  if (activeTab.value !== 1) {
+  if (activeTab.value !== 12) {
     content = systemTabs.value.find((tab: any) => tab?.id === activeTab.value - 1)?.title ?? 'Hapa'
   }
   return content
@@ -38,7 +34,7 @@ const tabInfo = computed(() => {
 
 const fetchSystemTabs = async () => {
   try {
-    const response = await fetch('/api/system-tabs?search=student', {
+    const response = await fetch('/api/system-tabs?search=staff', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -57,13 +53,13 @@ onMounted(() => {
   fetchSystemTabs()
 
   if (systemTabs.value.length > 0) {
-    activeTab.value = systemTabs?.value[0]?.id || 1
+    activeTab.value = systemTabs?.value[0]?.id || 12
   }
 })
 </script>
 
 <template>
-  <AppHead :title="title" description="A form to create a Student in Shule Dynamics" />
+  <AppHead :title="title" description="A form to create a staff member in Shule Dynamics" />
 
   <AppHeader>
     <div class="flex items-center justify-between w-full truncate">
@@ -84,11 +80,12 @@ onMounted(() => {
           <BreadcrumbItem>
             <BreadcrumbLink as-child>
               <Link
-                href="/students"
+                href="/staff"
                 class="flex items-center gap-2 text-xs transition-all duration-300 text-primary hover:underline"
               >
-                <Icon icon="heroicons:users-solid" class="size-4" />
-                <span>Students</span>
+                <Icon icon="heroicons:user-group-solid" class="size-4" />
+                <span>Staff</span>
+                <span class="hidden md:block">Management</span>
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -133,10 +130,7 @@ onMounted(() => {
       <div class="p-4 text-xs">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <div class="md:col-span-2">
-            <StudentInfoForm v-if="activeTab === 1" />
-            <GuardianInfoForm v-else-if="activeTab === 2" />
-            <EducationHistoryForm v-else-if="activeTab === 3" />
-            <ClassInfoForm v-else-if="activeTab === 4" />
+            <p v-if="activeTab === 12">Staff Information</p>
 
             <p v-else>
               First complete the

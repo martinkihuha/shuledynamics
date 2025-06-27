@@ -6,10 +6,10 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Campus from './campus.js'
 import Country from './country.js'
 import Curriculum from './curriculum.js'
-import Grade from './grade.js'
+import Gender from './gender.js'
 import Religion from './religion.js'
 
-export default class Guardian extends AppBaseModel {
+export default class StaffMember extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -18,6 +18,9 @@ export default class Guardian extends AppBaseModel {
 
   @column()
   declare countryId: number
+
+  @column()
+  declare genderId: number
 
   @column()
   declare religionId: number
@@ -29,16 +32,31 @@ export default class Guardian extends AppBaseModel {
   declare name: string
 
   @column()
-  declare mobile: string
+  declare mobile: string | null
 
   @column()
-  declare email: string
+  declare email: string | null
 
   @column()
   declare location: string
 
   @column()
+  declare postalAddress: string | null
+
+  @column()
+  declare postalCode: string | null
+
+  @column()
   declare notes: string | null
+
+  @column()
+  declare pinNumber: string | null
+
+  @column()
+  declare nssfNumber: string | null
+
+  @column()
+  declare nhifNumber: string | null
 
   @column.dateTime({ serializeAs: null })
   declare deletedAt: DateTime | null
@@ -50,7 +68,7 @@ export default class Guardian extends AppBaseModel {
   declare updatedAt: DateTime
 
   @beforeFetch()
-  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof Guardian>) {
+  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof StaffMember>) {
     query.whereNull('deletedAt')
   }
 
@@ -63,8 +81,8 @@ export default class Guardian extends AppBaseModel {
   @belongsTo(() => Curriculum)
   declare curriculum: BelongsTo<typeof Curriculum>
 
-  @belongsTo(() => Grade)
-  declare grade: BelongsTo<typeof Grade>
+  @belongsTo(() => Gender)
+  declare gender: BelongsTo<typeof Gender>
 
   @belongsTo(() => Religion)
   declare religion: BelongsTo<typeof Religion>

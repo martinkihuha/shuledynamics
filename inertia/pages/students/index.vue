@@ -84,40 +84,14 @@ onMounted(() => {
     <Card class="hidden p-0 border-none rounded sm:block">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
-          <tr class="text-[10px] divide-x divide-card">
-            <th
-              class="px-3 py-2 text-left rounded-tl text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Name
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Age
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Gender
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Class
-            </th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Stream
-            </th>
-            <th
-              class="p-2 text-right text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Fees Balance
-            </th>
-            <th
-              class="w-2/12 px-3 py-2 text-left rounded-tr text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
+          <tr class="text-[10px] divide-x divide-card border-b">
+            <th class="px-3 py-2 text-left rounded-tl text-nowrap bg-muted-foreground/10">Name</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Age</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Gender</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Class</th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Stream</th>
+            <th class="p-2 text-right text-nowrap bg-muted-foreground/10">Fees Balance</th>
+            <th class="w-2/12 px-3 py-2 text-left rounded-tr text-nowrap bg-muted-foreground/10">
               Status
             </th>
           </tr>
@@ -156,7 +130,7 @@ onMounted(() => {
     </Card>
 
     <div class="block space-y-6 sm:hidden">
-      <Card v-for="(item, i) in results?.data" :key="item?.id" class="p-0 border-none rounded">
+      <Card v-for="item in results?.data" :key="item?.id" class="p-0 border-none rounded">
         <Link :href="`/students/${item?.id}`" class="text-xs divide-y">
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
@@ -170,7 +144,7 @@ onMounted(() => {
 
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
-              <Icon icon="heroicons:phone-solid" class="size-4 text-primary" />
+              <Icon icon="heroicons:calendar-date-range-solid" class="size-4 text-primary" />
 
               <span>Age</span>
             </div>
@@ -180,7 +154,7 @@ onMounted(() => {
 
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
-              <Icon icon="heroicons:envelope-solid" class="size-4 text-primary" />
+              <Icon icon="mdi:gender-male-female" class="size-4 text-primary" />
 
               <span>Gender</span>
             </div>
@@ -190,7 +164,7 @@ onMounted(() => {
 
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
-              <Icon icon="heroicons:globe-alt-solid" class="size-4 text-primary" />
+              <Icon icon="heroicons:building-office-solid" class="size-4 text-primary" />
 
               <span>Class</span>
             </div>
@@ -200,7 +174,7 @@ onMounted(() => {
 
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
-              <Icon icon="heroicons:map-solid" class="size-4 text-primary" />
+              <Icon icon="heroicons:home-modern-solid" class="size-4 text-primary" />
 
               <span>Stream</span>
             </div>
@@ -220,7 +194,7 @@ onMounted(() => {
 
           <div class="flex items-center justify-between gap-8 p-2">
             <div class="flex items-center gap-2 text-accent-foreground">
-              <Icon icon="heroicons:map-solid" class="size-4 text-primary" />
+              <Icon icon="heroicons:exclamation-circle-solid" class="size-4 text-primary" />
 
               <span>Status</span>
             </div>

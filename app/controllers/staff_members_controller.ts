@@ -1,63 +1,68 @@
+import Campus from '#models/campus'
 import Country from '#models/country'
-import Curriculum from '#models/curriculum'
 import Gender from '#models/gender'
 import Grade from '#models/grade'
 import Religion from '#models/religion'
-import Stream from '#models/stream'
-import Student from '#models/student'
-import StudentStatus from '#models/student_status'
+import StaffMember from '#models/staff_member'
 import type { HttpContext } from '@adonisjs/core/http'
 
-export default class StudentsController {
+export default class StaffMembersController {
   async index({ inertia, request }: HttpContext) {
     const search = request.input('search', null)
     const page = search ? 1 : request.input('page', 1)
     const limit = request.input('limit', 20)
 
-    const results = await Student.query()
+    const results = await StaffMember.query()
       .whereNull('deletedAt')
       .if(search, (query) =>
         query.andWhere((subQuery) => {
           subQuery
             .whereILike('name', `%${search}%`)
-            .orWhereILike('admissionNo', `%${search}%`)
-            .orWhereILike('nemisNo', `%${search}%`)
+            .orWhereILike('nationalId', `%${search}%`)
+            .orWhereILike('mobile', `%${search}%`)
+            .orWhereILike('email', `%${search}%`)
         })
       )
+      .preload('campus')
       .preload('country')
       .preload('gender')
+      .preload('religion')
       .orderBy('id')
       .paginate(page, limit)
 
-    return inertia.render('students/index', { results, title: 'Students' })
+    return inertia.render('staff/index', { results, title: 'Staff Members' })
   }
 
   async create({ inertia }: HttpContext) {
     const result = {
       id: '',
+      campusId: '', // Will be set based on the user's campus
+      campus: <Campus>{},
       countryId: '114', // Default to Kenya
       country: <Country>{},
-      curriculumId: '',
-      curriculum: <Curriculum>{},
       genderId: '',
       gender: <Gender>{},
       gradeId: '',
       grade: <Grade>{},
       religionId: '',
       religion: <Religion>{},
-      streamId: '',
-      stream: <Stream>{},
-      studentStatusId: '2', // Default to 'Under Admission'
-      studentStatus: <StudentStatus>{},
       admissionNo: '',
       name: '',
-      dob: '',
-      nemisNo: '',
-      dateOfAdmission: '',
+      mobile: '',
+      email: '',
+      location: '',
+      postalAddress: '',
+      postalCode: '',
+      pinNumber: '',
+      nssfNumber: '',
+      nhifNumber: '',
       createdAt: '',
       updatedAt: '',
     }
 
-    return inertia.render('students/create', { result, title: 'Student Admission' })
+    return inertia.render('staff/create', {
+      result,
+      title: 'New Staff Member',
+    })
   }
 }

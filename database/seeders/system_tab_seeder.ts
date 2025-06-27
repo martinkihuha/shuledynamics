@@ -91,6 +91,34 @@ export default class extends BaseSeeder {
         btnText: 'Manage Roles',
         listOrder: 11,
       },
+      {
+        parent: 'Staff',
+        title: 'Staff Info',
+        icon: 'heroicons:user',
+        iconSolid: 'heroicons:user-solid',
+        listOrder: 12,
+      },
+      {
+        parent: 'Staff',
+        title: 'Education',
+        icon: 'heroicons:document-text',
+        iconSolid: 'heroicons:document-text-solid',
+        listOrder: 13,
+      },
+      {
+        parent: 'Staff',
+        title: 'Work Experience',
+        icon: 'heroicons:calendar-date-range',
+        iconSolid: 'heroicons:calendar-date-range-solid',
+        listOrder: 14,
+      },
+      {
+        parent: 'Staff',
+        title: 'Responsibilities',
+        icon: 'heroicons:clipboard-document-check',
+        iconSolid: 'heroicons:clipboard-document-check-solid',
+        listOrder: 15,
+      },
     ])
   }
 }

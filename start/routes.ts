@@ -32,15 +32,50 @@ const CampusesController = () => import('#controllers/campuses_controller')
 const SalutationsController = () => import('#controllers/salutations_controller')
 const RolesController = () => import('#controllers/roles_controller')
 const GuardiansController = () => import('#controllers/guardians_controller')
+const StaffMembersController = () => import('#controllers/staff_members_controller')
 
 router.group(() => {
   router.on('/').redirect('/dashboard')
   router.get('/dashboard', [StaticPagesController, 'dashboard'])
+  router.on('/finances').renderInertia('finances/index', {
+    title: 'Finances',
+  })
+  router.on('/assessments').renderInertia('assessments/index', {
+    title: 'Assessments',
+  })
+  router.on('/school').renderInertia('school/index', {
+    title: 'School Management',
+  })
+  router.on('/communication').renderInertia('communication/index', {
+    title: 'Communication',
+  })
+  router.on('/transport').renderInertia('transport/index', {
+    title: 'Transport',
+  })
+  router.on('/library').renderInertia('library/index', {
+    title: 'Library Management',
+  })
+  router.on('/inventory').renderInertia('inventory/index', {
+    title: 'Stores & Inventory',
+  })
+  router.on('/e-learning').renderInertia('e-learning/index', {
+    title: 'e-Learning',
+  })
+  router.on('/guardian-portal').renderInertia('guardian-portal/index', {
+    title: 'Guardian Portal',
+  })
+  router.on('/student-portal').renderInertia('student-portal/index', {
+    title: 'Student Portal',
+  })
+  router.on('/reports').renderInertia('reports/index', {
+    title: 'Reports Center',
+  })
 
   router.resource('/tasks', TasksController).only(['index'])
   router.resource('/applicants', ApplicantsController).only(['index'])
   router.resource('/students', StudentsController).only(['index', 'create'])
   router.resource('/guardians', GuardiansController).only(['index', 'store'])
+  router.resource('/staff', StaffMembersController).only(['index', 'create'])
 
   router
     .group(() => {

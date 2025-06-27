@@ -109,18 +109,10 @@ onMounted(() => {
     <Card class="p-0 border-none rounded">
       <table class="min-w-full text-xs rounded table-fixed">
         <thead>
-          <tr class="text-[10px] divide-x divide-card">
-            <th
-              class="p-2 text-left rounded-tl text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            ></th>
-            <th
-              class="p-2 text-left text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
-              Curriculum
-            </th>
-            <th
-              class="w-full p-2 text-left rounded-tr text-nowrap bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/5 to-muted-foreground/20"
-            >
+          <tr class="text-[10px] divide-x divide-card border-b">
+            <th class="p-2 text-left rounded-tl text-nowrap bg-muted-foreground/10"></th>
+            <th class="p-2 text-left text-nowrap bg-muted-foreground/10">Curriculum</th>
+            <th class="w-full p-2 text-left rounded-tr text-nowrap bg-muted-foreground/10">
               Classes
             </th>
           </tr>
