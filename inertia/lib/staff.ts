@@ -60,4 +60,33 @@ export const store = reactive({
     if (this.educationEntries.length <= 1) return // Ensure at least one education entry remains
     this.educationEntries.splice(index, 1)
   },
+
+  workExperiences: [
+    {
+      id: '',
+      jobTitle: '',
+      institution: '',
+      startDate: '',
+      endDate: '',
+      createdAt: '',
+      updatedAt: '',
+    },
+  ],
+
+  addWorkExperience() {
+    this.workExperiences.push({
+      id: '',
+      jobTitle: '',
+      institution: '',
+      startDate: '',
+      endDate: '',
+      createdAt: '',
+      updatedAt: '',
+    })
+  },
+
+  delWorkExperience(index: number) {
+    if (this.workExperiences.length <= 1) return // Ensure at least one work experience remains
+    this.workExperiences.splice(index, 1)
+  },
 })

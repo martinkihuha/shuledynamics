@@ -146,13 +146,13 @@ const previousSchoolSchema = z.object({
     },
     { message: 'Invalid School Name' }
   ),
-  dateOfAdmission: z.string().refine(
+  startDate: z.string().refine(
     (v) => {
       return store?.anyPreviousSchool === true ? !!v : true
     },
     { message: 'Invalid Date of Admission' }
   ),
-  dateOfDeparture: z.string().refine(
+  endDate: z.string().refine(
     (v) => {
       return store?.anyPreviousSchool === true ? !!v : true
     },
@@ -326,9 +326,9 @@ const onSubmit = handleSubmit((values) => {
 
           <div class="md:col-span-3">
             <FormField
-              v-model="item.dateOfAdmission"
+              v-model="item.startDate"
               v-slot="{ componentField }"
-              :name="`previousSchools[${i}].dateOfAdmission`"
+              :name="`previousSchools[${i}].startDate`"
             >
               <FormItem class="flex flex-col gap-1">
                 <FormLabel class="text-[10px] flex items-center gap-1">
@@ -354,9 +354,9 @@ const onSubmit = handleSubmit((values) => {
 
           <div class="md:col-span-3">
             <FormField
-              v-model="item.dateOfDeparture"
+              v-model="item.endDate"
               v-slot="{ componentField }"
-              :name="`previousSchools[${i}].dateOfDeparture`"
+              :name="`previousSchools[${i}].endDate`"
             >
               <FormItem class="flex flex-col gap-1">
                 <FormLabel class="text-[10px] flex items-center gap-1">
