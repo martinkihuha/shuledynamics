@@ -31,4 +31,33 @@ export const store = reactive({
     createdAt: '',
     updatedAt: '',
   },
+
+  educationEntries: [
+    {
+      id: '',
+      institution: '',
+      qualification: '',
+      startDate: '',
+      endDate: '',
+      createdAt: '',
+      updatedAt: '',
+    },
+  ],
+
+  addEducationEntry() {
+    this.educationEntries.push({
+      id: '',
+      institution: '',
+      qualification: '',
+      startDate: '',
+      endDate: '',
+      createdAt: '',
+      updatedAt: '',
+    })
+  },
+
+  delEducationEntry(index: number) {
+    if (this.educationEntries.length <= 1) return // Ensure at least one education entry remains
+    this.educationEntries.splice(index, 1)
+  },
 })

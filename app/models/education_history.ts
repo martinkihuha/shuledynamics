@@ -35,11 +35,11 @@ export default class EducationHistory extends AppBaseModel {
   @column()
   declare schoolName: string
 
-  @column()
-  declare dateOfAdmission: string
+  @column.dateTime()
+  declare dateOfAdmission: DateTime
 
-  @column()
-  declare dateOfDeparture: string
+  @column.dateTime()
+  declare dateOfDeparture: DateTime
 
   @column()
   declare classOfDeparture: string

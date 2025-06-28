@@ -48,9 +48,8 @@ export default class extends BaseSchema {
         .inTable('students')
         .onDelete('CASCADE')
       table.string('school_name').notNullable()
-      table.string('date_of_admission', 4).notNullable()
-      table.string('date_of_departure', 4).notNullable()
-      table.string('class_of_departure', 50).notNullable()
+      table.timestamp('date_of_admission').notNullable()
+      table.timestamp('date_of_departure').notNullable()
       table.string('leaving_certificate').notNullable()
       table.boolean('extra_activities').defaultTo(false)
 

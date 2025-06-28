@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { router } from '@inertiajs/vue3'
 
 import Country from '#models/country'
+import Gender from '#models/gender'
 import Relationship from '#models/relationship'
 import Religion from '#models/religion'
 import Salutation from '#models/salutation'
@@ -22,7 +23,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import Gender from '#models/gender'
 
 const isLoading = ref(false)
 const countries = ref<Country[]>([])
@@ -134,7 +134,7 @@ const { errors, handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  if (isLoading.value) return // Prevent multiple submissions if already loading
+  if (isLoading?.value) return // Prevent multiple submissions if already loading
 
   // console.log('Values:', values)
   if (store?.result?.id === '') {
@@ -419,29 +419,6 @@ const onSubmit = handleSubmit((values) => {
           </FormField>
         </div>
 
-        <div class="sm:col-span-4">
-          <FormField v-slot="{ componentField }" name="location">
-            <FormItem class="flex flex-col gap-1">
-              <FormLabel class="text-[10px] flex items-center gap-1">
-                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-                Location
-              </FormLabel>
-
-              <FormControl class="text-xs">
-                <Input
-                  type="text"
-                  placeholder="Location"
-                  autocomplete="off"
-                  class="text-xs rounded h-9 bg-card"
-                  v-bind="componentField"
-                />
-              </FormControl>
-
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </div>
-
         <div class="sm:col-span-2">
           <FormField v-slot="{ componentField }" name="postalAddress">
             <FormItem class="flex flex-col gap-1">
@@ -477,6 +454,29 @@ const onSubmit = handleSubmit((values) => {
                 <Input
                   type="text"
                   placeholder="Postal Code"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-4">
+          <FormField v-slot="{ componentField }" name="location">
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1">
+                <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+                Location
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="text"
+                  placeholder="Location"
                   autocomplete="off"
                   class="text-xs rounded h-9 bg-card"
                   v-bind="componentField"

@@ -16,7 +16,8 @@ import { Card } from '@/components/ui/card'
 
 import AppHead from '@/components/AppHead.vue'
 import AppHeader from '@/components/AppHeader.vue'
-import StaffInfo from '@/components/StaffInfo.vue'
+import StaffInfoForm from '@/components/StaffInfoForm.vue'
+import StaffEducationForm from '@/components/StaffEducationForm.vue'
 
 const props = defineProps<{
   result: any
@@ -130,7 +131,8 @@ onMounted(() => {
       <div class="p-4 text-xs">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div class="md:col-span-2">
-            <StaffInfo v-if="activeTab === 12" />
+            <StaffInfoForm v-if="activeTab === 12" />
+            <StaffEducationForm v-else-if="activeTab === 13" />
 
             <p v-else>
               First complete the

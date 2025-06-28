@@ -96,7 +96,7 @@ const { errors, handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  if (isLoading.value) return // Prevent multiple submissions if already loading
+  if (isLoading?.value) return // Prevent multiple submissions if already loading
 
   // console.log('Values:', values)
   if (store?.result?.id === '') {

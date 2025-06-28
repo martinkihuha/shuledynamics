@@ -196,7 +196,7 @@ const { errors, handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  if (isLoading.value) return // Prevent multiple submissions if already loading
+  if (isLoading?.value) return // Prevent multiple submissions if already loading
 
   // console.log('Values:', values)
   if (store?.result?.id === '') {
@@ -517,7 +517,14 @@ const onSubmit = handleSubmit((values) => {
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-                  <p v-if="store?.previousSchools?.length < 2">Must have atleast 1 school</p>
+                  <p v-if="store?.previousSchools?.length < 2">
+                    class="flex items-center gap-2">
+                    <Icon icon="heroicons:lock-closed-solid" class="text-base text-primary" />
+                    <span>
+                      <span class="text-primary">Locked:</span>
+                      Must have atleast 1 school
+                    </span>
+                  </p>
                   <p v-else>Delete this previous school</p>
                 </TooltipContent>
               </Tooltip>
