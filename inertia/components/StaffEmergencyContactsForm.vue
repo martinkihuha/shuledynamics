@@ -1,42 +1,68 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { store } from '@/lib/staff'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 import { router } from '@inertiajs/vue3'
 
+import Relationship from '#models/relationship'
+
 import { Card } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 const isLoading = ref(false)
-const today = new Date().toISOString().split('T')[0]
 
-const educationSchema = z.object({
-  institution: z.string().refine((v) => !!v, { message: 'Invalid Institution' }),
-  qualification: z.string().refine((v) => !!v, { message: 'Invalid Qualification' }),
-  startDate: z.string().refine((v) => !!v, { message: 'Invalid Start Date' }),
-  endDate: z.string().refine((v) => !!v, { message: 'Invalid End Date' }),
+const relationships = ref<Relationship[]>([])
+
+const fetchRelationships = async () => {
+  try {
+    const response = await fetch('/api/relationships', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+    relationships.value = await response.json()
+  } catch (error) {
+    console.error('Error fetching relationships:', error)
+  }
+}
+
+onMounted(() => {
+  fetchRelationships()
+})
+
+const emergencyContactSchema = z.object({
+  relationshipId: z.string().refine((v) => !!v, { message: 'Invalid Relationship' }),
+  name: z.string().refine((v) => !!v, { message: 'Invalid Name' }),
+  mobile: z.string().refine((v) => !!v, { message: 'Invalid Mobile' }),
 })
 
 const formSchema = z.object({
-  educationEntries: z
-    .array(educationSchema)
-    .nonempty({ message: 'At least one education entry is required' }),
+  emergencyContacts: z
+    .array(emergencyContactSchema)
+    .nonempty({ message: 'At least one emergency contact entry is required' }),
 })
 
 const { errors, handleSubmit } = useForm({
   validationSchema: toTypedSchema(formSchema),
   initialValues: {
-    educationEntries: [
+    emergencyContacts: [
       {
-        institution: '',
-        qualification: '',
-        startDate: '',
-        endDate: '',
+        relationshipId: '',
+        name: '',
+        mobile: '',
       },
     ],
   },
@@ -49,7 +75,7 @@ const onSubmit = handleSubmit((values) => {
   if (store?.result?.id === '') {
     try {
       isLoading.value = true
-      router.post('/guardians', values, {
+      router.post('/emergencyContacts', values, {
         onError: (errors) => {
           console.error('Error submitting form:', errors)
         },
@@ -73,26 +99,26 @@ const onSubmit = handleSubmit((values) => {
     </p>
 
     <Card
-      v-for="(item, i) in store?.educationEntries"
+      v-for="(item, i) in store?.emergencyContacts"
       :key="i"
       class="p-4 rounded bg-muted dark:bg-card"
     >
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField
-          v-model="item.institution"
+          v-model="item.name"
           v-slot="{ componentField }"
-          :name="`educationEntries[${i}].institution`"
+          :name="`emergencyContacts[${i}].name`"
         >
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Institution
+              Name
             </FormLabel>
 
             <FormControl class="text-xs">
               <Input
                 type="text"
-                placeholder="Institution"
+                placeholder="Name"
                 autocomplete="off"
                 class="text-xs rounded h-9 bg-card"
                 v-bind="componentField"
@@ -104,134 +130,87 @@ const onSubmit = handleSubmit((values) => {
         </FormField>
 
         <FormField
-          v-model="item.qualification"
+          v-model="item.relationshipId"
           v-slot="{ componentField }"
-          :name="`educationEntries[${i}].qualification`"
+          :name="`emergencyContacts[${i}].relationshipId`"
         >
           <FormItem class="flex flex-col gap-1">
             <FormLabel class="text-[10px] flex items-center gap-1">
               <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Qualification
+              Relationship
             </FormLabel>
 
-            <FormControl class="text-xs">
-              <Input
-                type="text"
-                placeholder="Qualification"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField
-          v-model="item.startDate"
-          v-slot="{ componentField }"
-          :name="`educationEntries[${i}].startDate`"
-        >
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Start Date
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="date"
-                placeholder="Start Date"
-                autocomplete="off"
-                :max="today"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField
-          v-model="item.endDate"
-          v-slot="{ componentField }"
-          :name="`educationEntries[${i}].endDate`"
-        >
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              End Date
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="date"
-                placeholder="End Date"
-                autocomplete="off"
-                :max="today"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <div class="sm:col-span-2">
-          <FormField
-            v-model="item.supportingDocument"
-            v-slot="{ componentField }"
-            :name="`educationEntries[${i}].supportingDocument`"
-          >
-            <FormItem class="flex flex-col gap-1">
-              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
-                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
-                Supporting Document
-              </FormLabel>
-
-              <FormControl class="text-xs">
-                <Input
-                  type="file"
-                  placeholder="Supporting Document"
-                  autocomplete="off"
-                  class="text-xs rounded h-9 bg-card"
-                  v-bind="componentField"
-                />
+            <Select v-bind="componentField">
+              <FormControl class="rounded bg-card">
+                <SelectTrigger class="w-full">
+                  <SelectValue placeholder="Relationship" />
+                </SelectTrigger>
               </FormControl>
+              <SelectContent>
+                <SelectItem
+                  v-for="relationship in relationships"
+                  :key="relationship?.id"
+                  :value="relationship?.id?.toString()"
+                  class="text-xs"
+                >
+                  {{ relationship?.name }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
 
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </div>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
 
-        <div class="sm:col-span-2">
-          <FormField
-            v-model="item.notes"
-            v-slot="{ componentField }"
-            :name="`educationEntries[${i}].notes`"
-          >
-            <FormItem class="flex flex-col gap-1">
-              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
-                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
-                Notes
-              </FormLabel>
+        <FormField
+          v-model="item.mobile"
+          v-slot="{ componentField }"
+          :name="`emergencyContacts[${i}].mobile`"
+        >
+          <FormItem class="flex flex-col gap-1">
+            <FormLabel class="text-[10px] flex items-center gap-1">
+              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+              Mobile Number
+            </FormLabel>
 
-              <FormControl class="text-xs">
-                <Textarea
-                  placeholder="Notes"
-                  autocomplete="off"
-                  class="text-xs rounded bg-card"
-                  v-bind="componentField"
-                />
-              </FormControl>
+            <FormControl class="text-xs">
+              <Input
+                type="tel"
+                placeholder="Mobile Number"
+                autocomplete="off"
+                class="text-xs rounded h-9 bg-card"
+                v-bind="componentField"
+              />
+            </FormControl>
 
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </div>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+
+        <FormField
+          v-model="item.email"
+          v-slot="{ componentField }"
+          :name="`emergencyContacts[${i}].email`"
+        >
+          <FormItem class="flex flex-col gap-1">
+            <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+              <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+              Email
+            </FormLabel>
+
+            <FormControl class="text-xs">
+              <Input
+                type="email"
+                placeholder="Email"
+                autocomplete="off"
+                class="text-xs rounded h-9 bg-card"
+                v-bind="componentField"
+              />
+            </FormControl>
+
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
 
         <div class="flex items-center justify-center gap-2 sm:col-span-2">
           <TooltipProvider>
@@ -240,14 +219,14 @@ const onSubmit = handleSubmit((values) => {
                 <button
                   type="button"
                   class="h-8 bg-secondary text-secondary-foreground text-xs rounded-[2px] flex items-center gap-2 px-4 hover:ring-2 hover:ring-offset-2 hover:ring-secondary dark:hover:ring-offset-black transition-all duration-300"
-                  @click="store.addEducationEntry"
+                  @click="store.addEmergencyContact"
                 >
                   <Icon icon="heroicons:plus" class="size-4" />
-                  <span>Add another Education Entry</span>
+                  <span>Add another Emergency Contact</span>
                 </button>
               </TooltipTrigger>
               <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-                <p>Add another Education Entry</p>
+                <p>Add another Emergency Contact</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -259,26 +238,26 @@ const onSubmit = handleSubmit((values) => {
                   type="button"
                   class="h-8 text-red-50 text-xs rounded-[2px] flex items-center gap-2 px-4"
                   :class="
-                    store?.educationEntries?.length < 2
+                    store?.emergencyContacts?.length < 2
                       ? 'bg-red-600/30 cursor-not-allowed'
                       : 'bg-red-600 hover:ring-2 hover:ring-offset-2 hover:ring-red-600 dark:hover:ring-offset-black transition-all duration-300'
                   "
-                  :disable="store?.educationEntries?.length < 2"
-                  @click="store.delEducationEntry(i)"
+                  :disable="store?.emergencyContacts?.length < 2"
+                  @click="store.delEmergencyContact(i)"
                 >
                   <Icon icon="heroicons:trash" class="size-4" />
-                  <span>Remove this Education Entry</span>
+                  <span>Remove this Emergency Contact</span>
                 </button>
               </TooltipTrigger>
               <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-                <p v-if="store?.educationEntries?.length < 2" class="flex items-center gap-2">
+                <p v-if="store?.emergencyContacts?.length < 2" class="flex items-center gap-2">
                   <Icon icon="heroicons:lock-closed-solid" class="text-base text-primary" />
                   <span>
                     <span class="text-primary">Locked:</span>
-                    Must have atleast 1 education entry
+                    Must have atleast 1 emergency contact
                   </span>
                 </p>
-                <p v-else>Delete this education entry</p>
+                <p v-else>Delete this emergency contact</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -299,7 +278,7 @@ const onSubmit = handleSubmit((values) => {
             </button>
           </TooltipTrigger>
           <TooltipContent side="bottom" class="border bg-card text-muted-foreground">
-            <p>Validate and save this staff's education entries</p>
+            <p>Validate and save this staff's emergency contacts</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

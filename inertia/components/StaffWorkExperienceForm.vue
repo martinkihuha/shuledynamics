@@ -9,6 +9,7 @@ import { router } from '@inertiajs/vue3'
 import { Card } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 const isLoading = ref(false)
@@ -78,31 +79,6 @@ const onSubmit = handleSubmit((values) => {
     >
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField
-          v-model="item.jobTitle"
-          v-slot="{ componentField }"
-          :name="`workExperiences[${i}].jobTitle`"
-        >
-          <FormItem class="flex flex-col gap-1">
-            <FormLabel class="text-[10px] flex items-center gap-1">
-              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
-              Job Title
-            </FormLabel>
-
-            <FormControl class="text-xs">
-              <Input
-                type="text"
-                placeholder="Job Title"
-                autocomplete="off"
-                class="text-xs rounded h-9 bg-card"
-                v-bind="componentField"
-              />
-            </FormControl>
-
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-
-        <FormField
           v-model="item.institution"
           v-slot="{ componentField }"
           :name="`workExperiences[${i}].institution`"
@@ -117,6 +93,31 @@ const onSubmit = handleSubmit((values) => {
               <Input
                 type="text"
                 placeholder="Institution"
+                autocomplete="off"
+                class="text-xs rounded h-9 bg-card"
+                v-bind="componentField"
+              />
+            </FormControl>
+
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+
+        <FormField
+          v-model="item.jobTitle"
+          v-slot="{ componentField }"
+          :name="`workExperiences[${i}].jobTitle`"
+        >
+          <FormItem class="flex flex-col gap-1">
+            <FormLabel class="text-[10px] flex items-center gap-1">
+              <Icon icon="mdi:asterisk" class="text-red-500 size-2" />
+              Job Title
+            </FormLabel>
+
+            <FormControl class="text-xs">
+              <Input
+                type="text"
+                placeholder="Job Title"
                 autocomplete="off"
                 class="text-xs rounded h-9 bg-card"
                 v-bind="componentField"
@@ -178,6 +179,59 @@ const onSubmit = handleSubmit((values) => {
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
+
+        <div class="sm:col-span-2">
+          <FormField
+            v-model="item.supportingDocument"
+            v-slot="{ componentField }"
+            :name="`workExperiences[${i}].supportingDocument`"
+          >
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                Supporting Document
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Input
+                  type="file"
+                  placeholder="Supporting Document"
+                  autocomplete="off"
+                  class="text-xs rounded h-9 bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
+
+        <div class="sm:col-span-2">
+          <FormField
+            v-model="item.notes"
+            v-slot="{ componentField }"
+            :name="`workExperiences[${i}].notes`"
+          >
+            <FormItem class="flex flex-col gap-1">
+              <FormLabel class="text-[10px] flex items-center gap-1 pl-3">
+                <!-- <Icon icon="mdi:asterisk" class="text-red-500 size-2" /> -->
+                Notes
+              </FormLabel>
+
+              <FormControl class="text-xs">
+                <Textarea
+                  placeholder="Notes"
+                  autocomplete="off"
+                  class="text-xs rounded bg-card"
+                  v-bind="componentField"
+                />
+              </FormControl>
+
+              <FormMessage class="text-xs" />
+            </FormItem>
+          </FormField>
+        </div>
 
         <div class="flex items-center justify-center gap-2 sm:col-span-2">
           <TooltipProvider>

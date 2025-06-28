@@ -19,6 +19,7 @@ import AppHeader from '@/components/AppHeader.vue'
 import StaffInfoForm from '@/components/StaffInfoForm.vue'
 import StaffEducationForm from '@/components/StaffEducationForm.vue'
 import StaffWorkExperienceForm from '@/components/StaffWorkExperienceForm.vue'
+import StaffEmergencyContactsForm from '@/components/StaffEmergencyContactsForm.vue'
 
 const props = defineProps<{
   result: any
@@ -135,6 +136,8 @@ onMounted(() => {
             <StaffInfoForm v-if="activeTab === 12" />
             <StaffEducationForm v-else-if="activeTab === 13" />
             <StaffWorkExperienceForm v-else-if="activeTab === 14" />
+            <!-- <StaffEmergencyContactsForm v-else-if="activeTab === 15" /> -->
+            <StaffEmergencyContactsForm v-else-if="activeTab === 16" />
 
             <p v-else>
               First complete the

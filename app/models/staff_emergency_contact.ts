@@ -4,8 +4,9 @@ import AppBaseModel from './app_base_model.js'
 import type { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import StaffMember from './staff_member.js'
+import Relationship from './relationship.js'
 
-export default class StaffWorkExperience extends AppBaseModel {
+export default class StaffEmergencyContact extends AppBaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -13,19 +14,16 @@ export default class StaffWorkExperience extends AppBaseModel {
   declare staffMemberId: number
 
   @column()
-  declare institution: string
+  declare relationshipId: number
 
   @column()
-  declare jobTitle: string
+  declare name: string
 
   @column()
-  declare qualification: string
+  declare mobile: string
 
-  @column.dateTime()
-  declare startDate: DateTime
-
-  @column.dateTime()
-  declare endDate: DateTime
+  @column()
+  declare email: string | null
 
   @column.dateTime({ serializeAs: null })
   declare deletedAt: DateTime | null
@@ -37,10 +35,13 @@ export default class StaffWorkExperience extends AppBaseModel {
   declare updatedAt: DateTime
 
   @beforeFetch()
-  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof StaffWorkExperience>) {
+  static withoutSoftDeletes(query: ModelQueryBuilderContract<typeof StaffEmergencyContact>) {
     query.whereNull('deletedAt')
   }
 
   @belongsTo(() => StaffMember)
   declare staffMember: BelongsTo<typeof StaffMember>
+
+  @belongsTo(() => Relationship)
+  declare relationship: BelongsTo<typeof Relationship>
 }

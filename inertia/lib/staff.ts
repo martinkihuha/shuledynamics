@@ -1,6 +1,7 @@
 import Campus from '#models/campus'
 import Country from '#models/country'
 import Gender from '#models/gender'
+import Relationship from '#models/relationship'
 import Religion from '#models/religion'
 import Salutation from '#models/salutation'
 import { reactive } from 'vue'
@@ -39,6 +40,8 @@ export const store = reactive({
       qualification: '',
       startDate: '',
       endDate: '',
+      supportingDocument: '',
+      notes: '',
       createdAt: '',
       updatedAt: '',
     },
@@ -51,6 +54,8 @@ export const store = reactive({
       qualification: '',
       startDate: '',
       endDate: '',
+      supportingDocument: '',
+      notes: '',
       createdAt: '',
       updatedAt: '',
     })
@@ -68,6 +73,8 @@ export const store = reactive({
       institution: '',
       startDate: '',
       endDate: '',
+      supportingDocument: '',
+      notes: '',
       createdAt: '',
       updatedAt: '',
     },
@@ -80,6 +87,8 @@ export const store = reactive({
       institution: '',
       startDate: '',
       endDate: '',
+      supportingDocument: '',
+      notes: '',
       createdAt: '',
       updatedAt: '',
     })
@@ -88,5 +97,36 @@ export const store = reactive({
   delWorkExperience(index: number) {
     if (this.workExperiences.length <= 1) return // Ensure at least one work experience remains
     this.workExperiences.splice(index, 1)
+  },
+
+  emergencyContacts: [
+    {
+      id: '',
+      relationshipId: '',
+      relationship: <Relationship>{},
+      name: '',
+      mobile: '',
+      email: '',
+      createdAt: '',
+      updatedAt: '',
+    },
+  ],
+
+  addEmergencyContact() {
+    this.emergencyContacts.push({
+      id: '',
+      relationshipId: '',
+      relationship: <Relationship>{},
+      name: '',
+      mobile: '',
+      email: '',
+      createdAt: '',
+      updatedAt: '',
+    })
+  },
+
+  delEmergencyContact(index: number) {
+    if (this.emergencyContacts.length <= 1) return // Ensure at least one emergency contact remains
+    this.emergencyContacts.splice(index, 1)
   },
 })
