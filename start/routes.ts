@@ -34,6 +34,7 @@ const RolesController = () => import('#controllers/roles_controller')
 const GuardiansController = () => import('#controllers/guardians_controller')
 const StaffMembersController = () => import('#controllers/staff_members_controller')
 const DepartureReasonsController = () => import('#controllers/departure_reasons_controller')
+const CampusRolesController = () => import('#controllers/campus_roles_controller')
 
 router.group(() => {
   router.on('/').redirect('/dashboard')
@@ -90,6 +91,7 @@ router.group(() => {
     .group(() => {
       router.get('/academic-terms', [AcademicTermsController, 'index'])
       router.get('/academic-years', [AcademicYearsController, 'index'])
+      router.get('/campus-roles', [CampusRolesController, 'index'])
       router.get('/countries', [CountriesController, 'index'])
       router.get('/counties', [CountiesController, 'index'])
       router.get('/currencies', [CurrenciesController, 'index'])

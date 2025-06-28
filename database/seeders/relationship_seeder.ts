@@ -1,6 +1,5 @@
 import Relationship from '#models/relationship'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
-import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   static environment = ['development', 'test', 'production']
@@ -19,7 +18,8 @@ export default class extends BaseSeeder {
       { name: 'Aunt' },
       { name: 'Cousin' },
       { name: 'Sponsor' },
-      { name: 'Other', deletedAt: DateTime.now() },
+      { name: 'Spouse' },
+      { name: 'Other' },
     ])
   }
 }

@@ -1,4 +1,5 @@
 import Campus from '#models/campus'
+import CampusRole from '#models/campus_role'
 import Country from '#models/country'
 import Gender from '#models/gender'
 import Relationship from '#models/relationship'
@@ -97,6 +98,33 @@ export const store = reactive({
   delWorkExperience(index: number) {
     if (this.workExperiences.length <= 1) return // Ensure at least one work experience remains
     this.workExperiences.splice(index, 1)
+  },
+
+  responsibilities: [
+    {
+      id: '',
+      campusRoleId: '',
+      campusRole: <CampusRole>{},
+      jobTitle: '',
+      createdAt: '',
+      updatedAt: '',
+    },
+  ],
+
+  addResponsibility() {
+    this.responsibilities.push({
+      id: '',
+      campusRoleId: '',
+      campusRole: <CampusRole>{},
+      jobTitle: '',
+      createdAt: '',
+      updatedAt: '',
+    })
+  },
+
+  delResponsibility(index: number) {
+    if (this.responsibilities.length <= 1) return // Ensure at least one responsibility remains
+    this.responsibilities.splice(index, 1)
   },
 
   emergencyContacts: [
